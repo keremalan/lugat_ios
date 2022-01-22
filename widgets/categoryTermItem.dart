@@ -1,5 +1,7 @@
+// ignore: file_names
 import 'package:flutter/cupertino.dart';
 
+// ignore: must_be_immutable
 class PopularCategoryItem extends StatelessWidget {
   PopularCategoryItem({
     required this.popCategoryImage,
@@ -17,7 +19,7 @@ class PopularCategoryItem extends StatelessWidget {
         child: Column(
           children: [
             ClipRRect( borderRadius: BorderRadius.circular(300),child: Image.network(popCategoryImage, height: 60, width: 60)),
-            Text(popCategoryTitle, style: TextStyle(overflow: TextOverflow.ellipsis),)
+            Text(popCategoryTitle, style: const TextStyle(overflow: TextOverflow.ellipsis),)
           ],
         ),
       ),

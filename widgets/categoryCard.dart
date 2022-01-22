@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lugat_ios/pages/addTerm.dart';
 
@@ -37,16 +36,16 @@ class CategoryCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Günün kelimesi", style: TextStyle(color: Colors.white),),
-                    Text(categoryDailyTerm, style: TextStyle(fontSize: 12, color: Colors.white)),
+                    const Text("Günün kelimesi", style: TextStyle(color: Colors.white),),
+                    Text(categoryDailyTerm, style: const TextStyle(fontSize: 12, color: Colors.white)),
                   ],
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => AddTerm()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const AddTerm()));
                   },
-                  child: Container( decoration: BoxDecoration( borderRadius: BorderRadius.circular(30), color: Colors.white),child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  child: Container( decoration: BoxDecoration( borderRadius: BorderRadius.circular(30), color: Colors.white),child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     child: Text("Terim ekle", style: TextStyle(color: Colors.black),),
                   )),
                 ),
@@ -60,8 +59,8 @@ class CategoryCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(categoryName, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),),
-                    Text('$categoryTermCount terim içeriyor', style: TextStyle(color: Colors.white, fontSize: 12),),
+                    Text(categoryName, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),),
+                    Text('$categoryTermCount terim içeriyor', style: const TextStyle(color: Colors.white, fontSize: 12),),
                   ],
                 ),
               ),
