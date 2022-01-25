@@ -18,7 +18,7 @@ class PopularCategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       child: Padding(
-        padding: EdgeInsets.only(right: 10),
+        padding: EdgeInsets.only(right: 2),
         child: Column(
           children: [
             ClipRRect( borderRadius: BorderRadius.circular(300),child: Image.network(popCategoryImage, height: 60, width: 60)),

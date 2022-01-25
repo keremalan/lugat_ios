@@ -9,6 +9,9 @@ class Term extends StatefulWidget {
 }
 
 class _TermState extends State<Term> {
+  final _formKey = GlobalKey<FormState>();
+  bool isEditable = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,36 +26,153 @@ class _TermState extends State<Term> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TermCard(termImage: 'https://www.upload.ee/image/13813417/code.png', termName: 'IDE', termAuthor: "Kerem Alan"),
+            TermCard(
+                termImage: 'https://www.upload.ee/image/13813417/code.png',
+                termName: 'IDE',
+                termAuthor: "Kerem Alan"),
             Padding(
-              padding: const EdgeInsets.symmetric( horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top: 16.0, bottom: 8),
-                    child: Text("Akla gelen ilk anlamı", style: TextStyle(color: Colors.black, fontSize: 17),),
-                  ),
-                  Text("Yazılım dilleri kullanılarak geliştirilen kodların kolayca yazılıp düzenlenebildiği araç.", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 17),),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text("Örnek", style: TextStyle(color: Colors.black, fontSize: 17),),
-                  ),
-                  Text("Visual Studio Code, Android Studio, Notepad++", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 17),),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text("Ek açıklamalar", style: TextStyle(color: Colors.black, fontSize: 17),),
-                  ),
-                  Text("Farklı IDE'ler farklı özellikler sunar ve kişinin tarzına bağlı olarak tercih edilen IDE değişebilir. Dile özel geliştirilen IDE'ler de mevcuttur. Dolayısıyla hangi IDE daha iyidir tarzında bir yaklaşım doğru kabul edilmeyebilir.", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 17),),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text("Katkı sağlayanlar", style: TextStyle(color: Colors.black, fontSize: 17),),
-                  ),
-                  Text("Kerem Alan", style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 17),),
-                  const SizedBox(
-                    height: 64,
-                  ),
-                ],
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(top: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Akla gelen ilk anlamı",
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 17)),
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                isEditable = !isEditable;
+                              });
+                            },
+                            child: Text("Katkı sağla"),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Visibility(
+                      visible: isEditable == false,
+                      child: Text(
+                        "Yazılım dilleri kullanılarak geliştirilen kodların kolayca yazılıp düzenlenebildiği araç.",
+                        style: TextStyle(
+                            color: Colors.black.withOpacity(0.6), fontSize: 17),
+                      ),
+                    ),
+                    Visibility(
+                      visible: isEditable == true,
+                      child: TextFormField(
+                        keyboardType: TextInputType.multiline,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.zero,
+                          border: InputBorder.none,
+                          hintText: 'Düzenlemek için dokunun',
+                          hintStyle: TextStyle(
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Text(
+                        "Örnek",
+                        style: TextStyle(color: Colors.black, fontSize: 17),
+                      ),
+                    ),
+                    Visibility(
+                      visible: isEditable == false,
+                      child: Text(
+                        "Visual Studio Code, Android Studio, Notepad++",
+                        style: TextStyle(
+                            color: Colors.black.withOpacity(0.6), fontSize: 17),
+                      ),
+                    ),
+                    Visibility(
+                      visible: isEditable == true,
+                      child: TextFormField(
+                        keyboardType: TextInputType.multiline,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Düzenlemek için dokunun',
+                          hintStyle: TextStyle(
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Text(
+                        "Ek açıklamalar",
+                        style: TextStyle(color: Colors.black, fontSize: 17),
+                      ),
+                    ),
+                    Visibility(
+                      visible: isEditable == false,
+                      child: Text(
+                        "Farklı IDE'ler farklı özellikler sunar ve kişinin tarzına bağlı olarak tercih edilen IDE değişebilir. Dile özel geliştirilen IDE'ler de mevcuttur. Dolayısıyla hangi IDE daha iyidir tarzında bir yaklaşım doğru kabul edilmeyebilir.",
+                        style: TextStyle(
+                            color: Colors.black.withOpacity(0.6), fontSize: 17),
+                      ),
+                    ),
+                    Visibility(
+                      visible: isEditable == true,
+                      child: TextFormField(
+                        keyboardType: TextInputType.multiline,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Düzenlemek için dokunun',
+                          hintStyle: TextStyle(
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: isEditable == true,
+                      child: Row(
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ContributeSuccess()));
+                            },
+                            child: Text("Tamamla"),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                isEditable =! isEditable;
+                              });
+                            },
+                            child: Text("İptal et"),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 24),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Text(
+                        "Katkı sağlayanlar",
+                        style: TextStyle(color: Colors.black, fontSize: 17),
+                      ),
+                    ),
+                    Text(
+                      "Kerem Alan",
+                      style: TextStyle(
+                          color: Colors.black.withOpacity(0.6), fontSize: 17),
+                    ),
+                    const SizedBox(
+                      height: 64,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -61,3 +181,37 @@ class _TermState extends State<Term> {
     );
   }
 }
+
+
+class ContributeSuccess extends StatelessWidget {
+  const ContributeSuccess({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.white,
+      ),
+      body: Container(
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.network("https://www.upload.ee/image/13825020/Mask_Group.png", height: 48,),
+            SizedBox(height: 16),
+            Text("Tebrikler!", style: TextStyle(color: Colors.green, fontSize: 22),),
+            SizedBox(height: 4,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text("Düzenlemeleriniz kaydedilerek moderatör onayına gönderilmiştir. Katkınız için Lugat topluluğu adına teşekkür ederiz.", style: TextStyle(color: Colors.green), textAlign: TextAlign.center,),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
