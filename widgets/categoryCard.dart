@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:lugat_ios/pages/addTerm.dart';
 
@@ -19,7 +21,7 @@ class CategoryCard extends StatelessWidget {
     return Container(
       height: 360,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(6),
+          borderRadius: BorderRadius.circular(0),
           image: DecorationImage(
             image: NetworkImage(categoryImage),
             fit: BoxFit.cover,

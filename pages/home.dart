@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lugat_ios/pages/addTerm.dart';
 import 'package:lugat_ios/pages/designCategory.dart';
+import 'package:lugat_ios/pages/hamburger.dart';
+import 'package:lugat_ios/pages/term.dart';
 import 'package:lugat_ios/widgets/categoryCard.dart';
+import 'package:lugat_ios/widgets/categoryOverviewCardItem.dart';
 import 'package:lugat_ios/widgets/categoryTermItem.dart';
 
 class Home extends StatelessWidget {
@@ -16,21 +18,29 @@ class Home extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.white,
         title: const Text("Lügat", style: TextStyle(color: Colors.black),),
-        actions: const [
-          Icon(Icons.menu, color: Colors.black),
-          SizedBox(width: 16),
+        actions:[
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const Hamburger()));
+            },
+            child: Row(
+              children: const [
+                Icon(Icons.menu, color: Colors.black),
+                SizedBox(width: 16),
+              ],
+            ),
+          ),
         ],
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          decoration: BoxDecoration(),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: const BoxDecoration(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("POPÜLER KATEGORİLER", style: TextStyle(color: Colors.black.withOpacity(0.4), fontSize: 13),),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -44,21 +54,20 @@ class Home extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 22),
+              const SizedBox(height: 22),
               CategoryCard(categoryImage: 'https://www.upload.ee/image/13813390/metaverse.png', categoryName: 'Metaverse', categoryDailyTerm: 'Yalın Metaverse', categoryTermCount: '128',),
-              SizedBox(height: 16),
-              Text("KATEGORİLER", style: TextStyle(color: Colors.black.withOpacity(0.4), fontSize: 13),),
+              const SizedBox(height: 16),
               Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Tasarım", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),),
+                      const Text("Tasarım", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),),
                       TextButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => DesignCategory()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const DesignCategory()));
                         },
-                        child: Text("Tümünü gör"),
+                        child: Text("Tümünü gör", style: TextStyle(color: Colors.black.withOpacity(0.8)),),
                       ),
                     ],
                   ),
@@ -66,7 +75,11 @@ class Home extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        CategoryOverviewCardItem(termImage: 'https://www.upload.ee/image/13813417/code.png', termTitle: 'IDE', termAuthor: 'Kerem Alan',),
+                        GestureDetector(
+                            onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const Term()));
+                  },
+                            child: CategoryOverviewCardItem(termImage: 'https://www.upload.ee/image/13813417/code.png', termTitle: 'IDE', termAuthor: 'Kerem Alan',)),
                         CategoryOverviewCardItem(termImage: 'https://www.upload.ee/image/13813417/code.png', termTitle: 'IDE', termAuthor: 'Kerem Alan',),
                         CategoryOverviewCardItem(termImage: 'https://www.upload.ee/image/13813417/code.png', termTitle: 'IDE', termAuthor: 'Kerem Alan',),
                         CategoryOverviewCardItem(termImage: 'https://www.upload.ee/image/13813417/code.png', termTitle: 'IDE', termAuthor: 'Kerem Alan',),
@@ -81,16 +94,17 @@ class Home extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Yazılım", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),),
+                      const Text("Yazılım", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),),
                       TextButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => DesignCategory()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const DesignCategory()));
                         },
-                        child: Text("Tümünü gör"),
+                        child: Text("Tümünü gör", style: TextStyle(color: Colors.black.withOpacity(0.8)),),
                       ),
                     ],
                   ),
                   SingleChildScrollView(
+                    primary: false,
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
@@ -101,40 +115,15 @@ class Home extends StatelessWidget {
                         CategoryOverviewCardItem(termImage: 'https://www.upload.ee/image/13813417/code.png', termTitle: 'IDE', termAuthor: 'Kerem Alan',),
                       ],
                     ),
+                  ),
+                  const SizedBox(
+                    height: 100,
                   ),
                 ],
               ),
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class CategoryOverviewCardItem extends StatelessWidget {
-  CategoryOverviewCardItem({
-    required this.termImage,
-    required this.termTitle,
-    required this.termAuthor,
-    Key? key,
-  }) : super(key: key);
-  String termImage;
-  String termTitle;
-  String termAuthor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(borderRadius: BorderRadius.circular(6),child: Image.network(termImage, height: 120, width: 120,)),
-          SizedBox(height: 4),
-          Text(termTitle, style: TextStyle(overflow: TextOverflow.ellipsis),),
-          Text(termAuthor, style: TextStyle(fontSize: 12, color: Colors.black.withOpacity(0.5), overflow: TextOverflow.ellipsis),),
-        ],
       ),
     );
   }

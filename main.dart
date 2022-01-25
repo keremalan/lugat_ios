@@ -10,7 +10,8 @@ class Lugat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Index(),
     );
   }
@@ -21,7 +22,7 @@ class Index extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return const Material(
       child: Scaffold(
         body: Home(),
       ),
