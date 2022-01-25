@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lugat_ios/categories/backendCategory.dart';
+import 'package:lugat_ios/categories/designCategory.dart';
+import 'package:lugat_ios/categories/othersCategory.dart';
 import 'package:lugat_ios/pages/home.dart';
 
 class Explore extends StatefulWidget {
@@ -33,11 +36,9 @@ class _ExploreState extends State<Explore> {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      ExploreCategoriesItem(),
-                      ExploreCategoriesItem(),
-                      ExploreCategoriesItem(),
-                      ExploreCategoriesItem(),
-                      ExploreCategoriesItem(),
+                      GestureDetector(onTap:(){Navigator.push(context, MaterialPageRoute(builder: (context) => DesignCategory()));},child: ExploreCategoriesItem(categoryImage: 'https://www.upload.ee/image/13779591/designCategory.png', categoryName: 'Tasarım')),
+                      GestureDetector(onTap:(){Navigator.push(context, MaterialPageRoute(builder: (context) => BackEndCategory()));},child: ExploreCategoriesItem(categoryImage: 'https://www.upload.ee/image/13824941/be.png', categoryName: 'Back-end')),
+                      GestureDetector(onTap:(){Navigator.push(context, MaterialPageRoute(builder: (context) => OthersCategory()));},child: ExploreCategoriesItem(categoryImage: 'https://www.upload.ee/image/13821620/others__2_.png', categoryName: 'Diğer Terimler'))
                     ],
                   ),
                 ),
@@ -53,9 +54,13 @@ class _ExploreState extends State<Explore> {
 }
 
 class ExploreCategoriesItem extends StatelessWidget {
-  const ExploreCategoriesItem({
+  ExploreCategoriesItem({
+    required this.categoryImage,
+    required this.categoryName,
     Key? key,
   }) : super(key: key);
+  String categoryImage;
+  String categoryName;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +72,8 @@ class ExploreCategoriesItem extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
           image: DecorationImage(
-            image: NetworkImage("https://www.upload.ee/image/13824935/drone.png"),
+            fit: BoxFit.cover,
+            image: NetworkImage(categoryImage),
           ),
         ),
         child: Column(
@@ -77,7 +83,7 @@ class ExploreCategoriesItem extends StatelessWidget {
             SizedBox(),
             Padding(
               padding: const EdgeInsets.only(bottom: 8, left: 8),
-              child: Text("Tasarım", style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w600),),
+              child: Text(categoryName, style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w600),),
             ),
           ],
         ),

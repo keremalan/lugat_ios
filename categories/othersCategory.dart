@@ -20,96 +20,105 @@ class _OthersCategoryState extends State<OthersCategory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => AddTerm(),
+          ));
+        },
+        backgroundColor: Colors.black,
+        child: Icon(Icons.add),
+      ),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         title: const Text("Back-end"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CategoryCard(categoryImage: 'https://www.upload.ee/image/13821620/others__2_.png', categoryName: 'Back-end', categoryDailyTerm: 'NoSQL', categoryTermCount: '1337',),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                  child: Text("Terimler",style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),),
-                ),
-                GestureDetector(onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddTerm()));
-                },
-                    child: Text("terim ekle (deneme")),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    child: StreamBuilder<QuerySnapshot>(
-                      stream: _termsStream,
-                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-                        if (snapshot.hasError) {
-                          return Text('Bir şeyler ters gitmiş olmalı.');
-                        }
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        primary: false,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CategoryCard(categoryImage: 'https://www.upload.ee/image/13821620/others__2_.png', categoryName: 'Back-end', categoryDailyTerm: 'NoSQL', categoryTermCount: '1337',),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                    child: Text("Terimler",style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),),
+                  ),
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream: _termsStream,
+                        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                          if (snapshot.hasError) {
+                            return Text('Bir şeyler ters gitmiş olmalı.');
+                          }
 
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Text('Şu anda içerik yükleniyor.');
-                        }
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return Text('Şu anda içerik yükleniyor.');
+                          }
 
-                        return MediaQuery.removePadding(
-                          removeTop: true,
-                          context: context,
-                          child: ListView(
-                            primary: false,
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            children: snapshot.data!.docs.map((QueryDocumentSnapshot<Object?> data) {
-                              final String termTitle = data.get('termTitle');
-                              final String termImage = data['termImage'];
-                              final String termMean = data['termMean'];
-                              final String termExample = data['termExample'];
-                              final String termDescription = data['termDescription'];
-                              final String termAuthor = data['termAuthor'];
-                              final String termCategory = data['termCategory'];
-                              final bool isSaved = data['isSaved'];
-                              final String termContributor = data['termContributor'];
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) => Term(data: data,)));
-                                },
-                                child: ListTile(
-                                  contentPadding:EdgeInsets.all(0),
-                                  leading: ClipOval(
-                                    child: Image.network(data['termImage'],
-                                      height: 50,
-                                      width: 50,
-                                      fit: BoxFit.cover,
+                          return MediaQuery.removePadding(
+                            removeTop: true,
+                            context: context,
+                            child: ListView(
+                              primary: false,
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              children: snapshot.data!.docs.map((QueryDocumentSnapshot<Object?> data) {
+                                final String termTitle = data.get('termTitle');
+                                final String termImage = data['termImage'];
+                                final String termMean = data['termMean'];
+                                final String termExample = data['termExample'];
+                                final String termDescription = data['termDescription'];
+                                final String termAuthor = data['termAuthor'];
+                                final String termCategory = data['termCategory'];
+                                final bool isSaved = data['isSaved'];
+                                final String termContributor = data['termContributor'];
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(
+                                        builder: (context) => Term(data: data,)));
+                                  },
+                                  child: ListTile(
+                                    contentPadding:EdgeInsets.all(0),
+                                    leading: ClipOval(
+                                      child: Image.network(data['termImage'],
+                                        height: 50,
+                                        width: 50,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                  ),
-                                  title: Text(data['termTitle'],
-                                    style: TextStyle(
-                                        fontSize: 16
+                                    title: Text(data['termTitle'],
+                                      style: TextStyle(
+                                          fontSize: 16
+                                      ),
                                     ),
+                                    subtitle: Text(data['termExample'],
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),),
                                   ),
-                                  subtitle: Text(data['termExample'],
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),),
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        );
-                      },
+                                );
+                              }).toList(),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -182,6 +191,29 @@ class _AddTermState extends State<AddTerm> {
                           hintText: 'Adını düzenlemek için dokun',
                         ),
                         keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 24),
+                        child: Text("Görseli", style: TextStyle(fontSize: 17)),
+                      ),
+                      TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Terim görseli boş bırakılamaz';
+                          } return null;
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            termImage = value;
+                          });
+                        },
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Görsel bağlantısını eklemek için dokun',
+                        ),
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
                       ),
                       Text("Akla gelen ilk anlamı", style: TextStyle(fontSize: 17)),
                       TextFormField(
@@ -200,6 +232,7 @@ class _AddTermState extends State<AddTerm> {
                           hintText: 'Akla gelen ilk anlamını düzenlemek için dokun',
                         ),
                         keyboardType: TextInputType.multiline,
+                        maxLines: null,
                       ),
                       Text("Örnek", style: TextStyle(fontSize: 17)),
                       TextFormField(
@@ -211,6 +244,7 @@ class _AddTermState extends State<AddTerm> {
                         onChanged: (value) {
                           setState(() {
                             termExample = value;
+                            uid = FirebaseAuth.instance.currentUser!.uid;
                           });
                         },
                         decoration: InputDecoration(
@@ -218,6 +252,7 @@ class _AddTermState extends State<AddTerm> {
                           hintText: 'Örneği düzenlemek için dokun',
                         ),
                         keyboardType: TextInputType.multiline,
+                        maxLines: null,
                       ),
                       Text("Ek açıklamalar", style: TextStyle(fontSize: 17)),
                       TextFormField(
@@ -228,7 +263,7 @@ class _AddTermState extends State<AddTerm> {
                         },
                         onChanged: (value) {
                           setState(() {
-                            termTitle = value;
+                            termDescription = value;
                             termCategory = 'Others';
                             authorPhotoUrl = FirebaseAuth.instance.currentUser!.photoURL!;
                           });
@@ -238,6 +273,7 @@ class _AddTermState extends State<AddTerm> {
                           hintText: 'Ek açıklamaları düzenlemek için dokun',
                         ),
                         keyboardType: TextInputType.multiline,
+                        maxLines: null,
                       ),
                       Row(
                         children: [

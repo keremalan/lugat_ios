@@ -408,10 +408,9 @@ class ProfileSettings extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
-              HamburgerItem(),
-              HamburgerItem(),
-              HamburgerItem(),
-              HamburgerItem(),
+              HamburgerItem(itemTitle: 'Kişisel Bilgiler', itemDescription: "İsminiz ve diğer bilgileriniz"),
+              HamburgerItem(itemTitle: 'Güvenlik', itemDescription: 'Şifre, telefon, e-post adresiniz'),
+              HamburgerItem(itemTitle: 'Yardım', itemDescription: 'İletişim kanallarını buradan görüntüleyebilirsiniz'),
             ],
           ),
         ),

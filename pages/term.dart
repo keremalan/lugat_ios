@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lugat_ios/widgets/termCard.dart';
 
 class Term extends StatefulWidget {
   const Term({this.data});
+
   final QueryDocumentSnapshot<Object?>? data;
 
   @override
@@ -11,6 +14,19 @@ class Term extends StatefulWidget {
 }
 
 class _TermState extends State<Term> {
+  final Map<String, dynamic> entry = {};
+  String termTitle = '';
+  String termMean = '';
+  String termExample = '';
+  String termDescription = '';
+  String termAuthor = '';
+  String _myActivity = '';
+  String termCategory = '';
+  String _myActivityResult = '';
+  String uid = '';
+  String termImage = '';
+  String termContributor = '';
+  String authorPhotoUrl = '';
   final _formKey = GlobalKey<FormState>();
   bool isEditable = false;
 
@@ -39,15 +55,80 @@ class _TermState extends State<Term> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: 16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Akla gelen ilk anlamı",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 17)),
-                          TextButton(
+                    Visibility(
+                      visible: isEditable == true,
+                      child: SizedBox(height: 16),
+                    ),
+                    Visibility(
+                      visible: isEditable == true,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Text(
+                          "Terim adı",
+                          style: TextStyle(fontSize: 17),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: isEditable == true,
+                      child: TextFormField(
+                        onChanged: (value) {
+                          setState(() {
+                            termTitle = value;
+                          });
+                        },
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.zero,
+                          border: InputBorder.none,
+                          hintText: 'Düzenlemek için dokunun',
+                          hintStyle: TextStyle(
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: isEditable == true,
+                      child: Text(
+                        "Görseli",
+                        style: TextStyle(fontSize: 17),
+                      ),
+                    ),
+                    Visibility(
+                      visible: isEditable == true,
+                      child: TextFormField(
+                        onChanged: (value) {
+                          setState(() {
+                            termImage = value;
+                          });
+                        },
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.zero,
+                          border: InputBorder.none,
+                          hintText: 'Düzenlemek için dokunun',
+                          hintStyle: TextStyle(
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: isEditable == false,
+                      child: SizedBox(height: 16),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Akla gelen ilk anlamı",
+                            style:
+                                TextStyle(color: Colors.black, fontSize: 17)),
+                        Visibility(
+                          visible: isEditable == false,
+                          child: TextButton(
                             onPressed: () {
                               setState(() {
                                 isEditable = !isEditable;
@@ -55,8 +136,8 @@ class _TermState extends State<Term> {
                             },
                             child: Text("Katkı sağla"),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                     Visibility(
                       visible: isEditable == false,
@@ -69,7 +150,13 @@ class _TermState extends State<Term> {
                     Visibility(
                       visible: isEditable == true,
                       child: TextFormField(
+                        onChanged: (value) {
+                          setState(() {
+                            termMean = value;
+                          });
+                        },
                         keyboardType: TextInputType.multiline,
+                        maxLines: null,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.zero,
                           border: InputBorder.none,
@@ -98,7 +185,15 @@ class _TermState extends State<Term> {
                     Visibility(
                       visible: isEditable == true,
                       child: TextFormField(
+                        onChanged: (value) {
+                          setState(() {
+                            termExample = value;
+                            termCategory = widget.data!.get('termCategory');
+                            termContributor = FirebaseAuth.instance.currentUser!.displayName!;
+                          });
+                        },
                         keyboardType: TextInputType.multiline,
+                        maxLines: null,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Düzenlemek için dokunun',
@@ -126,7 +221,13 @@ class _TermState extends State<Term> {
                     Visibility(
                       visible: isEditable == true,
                       child: TextFormField(
+                        onChanged: (value) {
+                          setState(() {
+                            termDescription = value;
+                          });
+                        },
                         keyboardType: TextInputType.multiline,
+                        maxLines: null,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Düzenlemek için dokunun',
@@ -142,14 +243,39 @@ class _TermState extends State<Term> {
                         children: [
                           ElevatedButton(
                             onPressed: () {
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ContributeSuccess()));
+                              final formState = _formKey.currentState;
+                              if (formState == null) return;
+                              if (formState.validate() == true) {
+                                formState.save();
+                                FirebaseFirestore.instance
+                                    .collection('contributes')
+                                    .add({
+                                  'termTitle': termTitle,
+                                  'termImage': termImage,
+                                  'termCategory': termCategory,
+                                  'termMean': termMean,
+                                  'termExample': termExample,
+                                  'termDescription': termDescription,
+                                  'termAuthor':
+                                      '${FirebaseAuth.instance.currentUser!.displayName!}',
+                                  'isSaved': false,
+                                  'uid': FirebaseAuth.instance.currentUser!.displayName,
+                                  'termContributor': termContributor,
+                                  'authorPhotoUrl': widget.data!.get('termAuthor'),
+                                });
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ContributeSuccess()));
+                              }
                             },
                             child: Text("Tamamla"),
                           ),
                           TextButton(
                             onPressed: () {
                               setState(() {
-                                isEditable =! isEditable;
+                                isEditable = !isEditable;
                               });
                             },
                             child: Text("İptal et"),
@@ -184,7 +310,6 @@ class _TermState extends State<Term> {
   }
 }
 
-
 class ContributeSuccess extends StatelessWidget {
   const ContributeSuccess({Key? key}) : super(key: key);
 
@@ -202,13 +327,25 @@ class ContributeSuccess extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.network("https://www.upload.ee/image/13825020/Mask_Group.png", height: 48,),
+            Image.network(
+              "https://www.upload.ee/image/13825020/Mask_Group.png",
+              height: 48,
+            ),
             SizedBox(height: 16),
-            Text("Tebrikler!", style: TextStyle(color: Colors.green, fontSize: 22),),
-            SizedBox(height: 4,),
+            Text(
+              "Tebrikler!",
+              style: TextStyle(color: Colors.green, fontSize: 22),
+            ),
+            SizedBox(
+              height: 4,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text("Düzenlemeleriniz kaydedilerek moderatör onayına gönderilmiştir. Katkınız için Lugat topluluğu adına teşekkür ederiz.", style: TextStyle(color: Colors.green), textAlign: TextAlign.center,),
+              child: Text(
+                "Düzenlemeleriniz kaydedilerek moderatör onayına gönderilmiştir. Katkınız için Lugat topluluğu adına teşekkür ederiz.",
+                style: TextStyle(color: Colors.green),
+                textAlign: TextAlign.center,
+              ),
             ),
           ],
         ),
@@ -216,4 +353,3 @@ class ContributeSuccess extends StatelessWidget {
     );
   }
 }
-

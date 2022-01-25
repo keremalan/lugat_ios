@@ -24,10 +24,10 @@ class _HamburgerState extends State<Hamburger> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
-              HamburgerItem(),
-              HamburgerItem(),
-              HamburgerItem(),
-              HamburgerItem(),
+              HamburgerItem(itemTitle: 'Geri bildirim', itemDescription: "Deneyimini aktar, Lügat'ı geliştirmemize katkı sağla!"),
+              HamburgerItem(itemTitle: 'İhlal bildirimi', itemDescription: 'Rahatsız olduğun ifadeleri, görselleri bildir'),
+              HamburgerItem(itemTitle: 'Yardım', itemDescription: 'İletişim bilgileri ve Sıkça Sorulan Sorular'),
+              HamburgerItem(itemTitle: 'Yol haritası', itemDescription: "Lügat'ın geleceğine dair rota."),
             ],
           ),
         ),
@@ -37,9 +37,13 @@ class _HamburgerState extends State<Hamburger> {
 }
 
 class HamburgerItem extends StatelessWidget {
-  const HamburgerItem({
+  HamburgerItem({
+    required this.itemTitle,
+    required this.itemDescription,
     Key? key,
   }) : super(key: key);
+  String itemTitle;
+  String itemDescription;
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +54,8 @@ class HamburgerItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Geri bildirim", style: TextStyle(fontSize: 17),),
-              Text("Yaşadığınız deneyimi zenginleştirebilmemiz için bize ulaşın.", style: TextStyle(fontSize: 13, color: Colors.black.withOpacity(0.4)),),
+              Text(itemTitle, style: TextStyle(fontSize: 17),),
+              Text(itemDescription, style: TextStyle(fontSize: 13, color: Colors.black.withOpacity(0.4)),),
             ],
           ),
         ),
