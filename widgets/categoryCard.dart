@@ -42,16 +42,16 @@ class CategoryCard extends StatelessWidget {
                     Text(categoryDailyTerm, style: const TextStyle(fontSize: 12, color: Colors.white)),
                   ],
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const AddTerm()));
-                  },
-                  child: Container( decoration: BoxDecoration( borderRadius: BorderRadius.circular(30), color: Colors.white),child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    child: Text("Terim ekle", style: TextStyle(color: Colors.black),),
-                  )),
-                ),
-              ],
+                //TextButton(
+                  //onPressed: () {
+                    //Navigator.push(context, MaterialPageRoute(builder: (context) => const AddTerm()));
+                    //},
+                  //child: Container( decoration: BoxDecoration( borderRadius: BorderRadius.circular(30), color: Colors.white),child: const Padding(
+                      //padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    //child: Text("Terim ekle", style: TextStyle(color: Colors.black),),
+                  //)),
+                //),
+              ]//,
             ),
           ),
           Row(

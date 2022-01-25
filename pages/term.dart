@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lugat_ios/widgets/termCard.dart';
 
 class Term extends StatefulWidget {
-  const Term({Key? key}) : super(key: key);
+  const Term({this.data});
+  final QueryDocumentSnapshot<Object?>? data;
 
   @override
   _TermState createState() => _TermState();
@@ -27,9 +29,9 @@ class _TermState extends State<Term> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TermCard(
-                termImage: 'https://www.upload.ee/image/13813417/code.png',
-                termName: 'IDE',
-                termAuthor: "Kerem Alan"),
+                termImage: widget.data!.get('termImage'),
+                termName: widget.data!.get('termTitle'),
+                termAuthor: widget.data!.get('termAuthor')),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Form(
@@ -59,7 +61,7 @@ class _TermState extends State<Term> {
                     Visibility(
                       visible: isEditable == false,
                       child: Text(
-                        "Yazılım dilleri kullanılarak geliştirilen kodların kolayca yazılıp düzenlenebildiği araç.",
+                        widget.data!.get('termMean'),
                         style: TextStyle(
                             color: Colors.black.withOpacity(0.6), fontSize: 17),
                       ),
@@ -88,7 +90,7 @@ class _TermState extends State<Term> {
                     Visibility(
                       visible: isEditable == false,
                       child: Text(
-                        "Visual Studio Code, Android Studio, Notepad++",
+                        widget.data!.get('termExample'),
                         style: TextStyle(
                             color: Colors.black.withOpacity(0.6), fontSize: 17),
                       ),
@@ -116,7 +118,7 @@ class _TermState extends State<Term> {
                     Visibility(
                       visible: isEditable == false,
                       child: Text(
-                        "Farklı IDE'ler farklı özellikler sunar ve kişinin tarzına bağlı olarak tercih edilen IDE değişebilir. Dile özel geliştirilen IDE'ler de mevcuttur. Dolayısıyla hangi IDE daha iyidir tarzında bir yaklaşım doğru kabul edilmeyebilir.",
+                        widget.data!.get('termDescription'),
                         style: TextStyle(
                             color: Colors.black.withOpacity(0.6), fontSize: 17),
                       ),
@@ -164,7 +166,7 @@ class _TermState extends State<Term> {
                       ),
                     ),
                     Text(
-                      "Kerem Alan",
+                      widget.data!.get('termContributor'),
                       style: TextStyle(
                           color: Colors.black.withOpacity(0.6), fontSize: 17),
                     ),

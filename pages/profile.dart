@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lugat_ios/pages/hamburger.dart';
+import 'package:lugat_ios/pages/term.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -9,6 +12,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
+      .collection('terms').where('uid', isEqualTo: '${FirebaseAuth.instance.currentUser!.uid}').snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,10 +56,124 @@ class _ProfileState extends State<Profile> {
                     Divider(
                       color: Colors.grey.withOpacity(0.4),
                     ),
-                    TermPost(),
-                    TermPost(),
-                    TermPost(),
-                    TermPost(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: Container(
+                          child: StreamBuilder<QuerySnapshot>(
+                            stream: _termsStream,
+                            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                              if (snapshot.hasError) {
+                                return Text('Bir şeyler ters gitmiş olmalı.');
+                              }
+
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return Text('Şu anda içerik yükleniyor.');
+                              }
+
+                              return MediaQuery.removePadding(
+                                removeTop: true,
+                                context: context,
+                                child: ListView(
+                                  primary: false,
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  children: snapshot.data!.docs.map((QueryDocumentSnapshot<Object?> data) {
+                                    final String termTitle = data.get('termTitle');
+                                    final String termImage = data['termImage'];
+                                    final String termMean = data['termMean'];
+                                    final String termExample = data['termExample'];
+                                    final String termDescription = data['termDescription'];
+                                    final String termAuthor = data['termAuthor'];
+                                    final String termCategory = data['termCategory'];
+                                    final bool isSaved = data['isSaved'];
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(context, MaterialPageRoute(
+                                            builder: (context) => Term(data: data,)));
+                                      },
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              ClipRRect(borderRadius: BorderRadius.circular(30),child: Image.network(FirebaseAuth.instance.currentUser!.photoURL!, width: 40, height: 40)),
+                                              SizedBox(width: 10),
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        Text(data['termAuthor']),
+                                                        Text("@keremalan", style: TextStyle(fontSize: 12, color: Colors.black.withOpacity(0.4))),
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 2,),
+                                                    Row(
+                                                      children: [
+                                                        Flexible(fit: FlexFit.loose, child: Text(data['termMean'], style: TextStyle(fontSize: 13, color: Colors.black.withOpacity(0.6)))),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 6,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(left: 52),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                SizedBox(height: 4),
+                                                Container(
+                                                  width: 396,
+                                                  height: 200,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(6),
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: NetworkImage(data['termImage']),
+                                                      colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.18), BlendMode.darken),
+                                                    ),
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.end,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(left: 12, bottom: 12),
+                                                        child: Column(
+                                                          children: [
+                                                            Text(data['termTitle'], style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 17)),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(height: 6),
+                                          Divider(
+                                            color: Colors.grey.withOpacity(0.2),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -67,9 +186,19 @@ class _ProfileState extends State<Profile> {
 }
 
 class TermPost extends StatelessWidget {
-  const TermPost({
+  TermPost({
+  required this.termAuthor,
     Key? key,
   }) : super(key: key);
+  String termAuthor = '';
+  String termImage = '';
+  String termTitle = '';
+  String termExample = '';
+  String termMean = '';
+  String termDescription = '';
+  String termContributor = '';
+  String termCategory = '';
+  String uid = '';
 
   @override
   Widget build(BuildContext context) {
@@ -236,7 +365,7 @@ class ProfileHead extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Kerem Alan", style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),),
+            Text("${FirebaseAuth.instance.currentUser!.displayName!}", style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),),
             Row(
               children: [
                 Text("Geight"),
@@ -251,7 +380,7 @@ class ProfileHead extends StatelessWidget {
         ),
         ClipRRect(
           borderRadius: BorderRadius.circular(30),
-          child: Image.network("https://media-exp1.licdn.com/dms/image/C4D03AQEQpZW5_sX-LA/profile-displayphoto-shrink_800_800/0/1641093536875?e=1648684800&v=beta&t=d_KlOnEmgd61XiRxJXMsDtkMJb-XxXAsy32SGzoXGKQ",
+          child: Image.network(FirebaseAuth.instance.currentUser!.photoURL!,
           height: 42,
           width: 42,
           ),

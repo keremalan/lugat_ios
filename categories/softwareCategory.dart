@@ -5,16 +5,16 @@ import 'package:lugat_ios/pages/profile.dart';
 import 'package:lugat_ios/pages/term.dart';
 import 'package:lugat_ios/widgets/categoryCard.dart';
 
-class RoboticsCategory extends StatefulWidget {
-  const RoboticsCategory({Key? key}) : super(key: key);
+class SoftwareCategory extends StatefulWidget {
+  const SoftwareCategory({Key? key}) : super(key: key);
 
   @override
-  _RoboticsCategoryState createState() => _RoboticsCategoryState();
+  _SoftwareCategoryState createState() => _SoftwareCategoryState();
 }
 
-class _RoboticsCategoryState extends State<RoboticsCategory> {
+class _SoftwareCategoryState extends State<SoftwareCategory> {
   final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
-      .collection('terms').where('termCategory', isEqualTo: 'Robotics').snapshots();
+      .collection('terms').where('termCategory', isEqualTo: 'Software').snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +22,7 @@ class _RoboticsCategoryState extends State<RoboticsCategory> {
         elevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
-        title: const Text("Robotik"),
+        title: const Text("Back-end"),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -32,7 +32,7 @@ class _RoboticsCategoryState extends State<RoboticsCategory> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CategoryCard(categoryImage: 'https://www.upload.ee/image/13824932/robotics.png', categoryName: 'Robotik', categoryDailyTerm: 'Node', categoryTermCount: '1337',),
+              CategoryCard(categoryImage: 'https://www.upload.ee/image/13824941/be.png', categoryName: 'Back-end', categoryDailyTerm: 'NoSQL', categoryTermCount: '1337',),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

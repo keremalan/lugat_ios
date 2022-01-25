@@ -5,7 +5,9 @@ import 'package:lugat_ios/categories/designCategory.dart';
 import 'package:lugat_ios/categories/droneCategory.dart';
 import 'package:lugat_ios/categories/frontendCategory.dart';
 import 'package:lugat_ios/categories/metaverseCategory.dart';
+import 'package:lugat_ios/categories/othersCategory.dart';
 import 'package:lugat_ios/categories/roboticsCategory.dart';
+import 'package:lugat_ios/categories/softwareCategory.dart';
 import 'package:lugat_ios/pages/hamburger.dart';
 import 'package:lugat_ios/pages/term.dart';
 import 'package:lugat_ios/widgets/categoryCard.dart';
@@ -52,6 +54,12 @@ class Home extends StatelessWidget {
                 child: Row(
                   children: [
                     GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => OthersCategory()));
+                      },
+                      child: PopularCategoryItem(popCategoryImage: 'https://www.upload.ee/image/13821620/others__2_.png', popCategoryTitle: 'Diğerleri'),
+                    ),
+                    GestureDetector(
                       onTap: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => MetaverseCategory()));
               },
@@ -92,7 +100,7 @@ class SoftwareCategoryOverview extends StatelessWidget {
             const Text("Yazılım", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),),
             TextButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const DesignCategory()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const SoftwareCategory()));
               },
               child: Text("Tümünü gör", style: TextStyle(color: Colors.black.withOpacity(0.8)),),
             ),
