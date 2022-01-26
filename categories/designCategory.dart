@@ -1,8 +1,8 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, unused_local_variable
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:lugat_ios/pages/profile.dart';
+import 'package:lugat_ios/main.dart';
 import 'package:lugat_ios/pages/term.dart';
 import 'package:lugat_ios/widgets/categoryCard.dart';
 import 'package:lugat_ios/widgets/termCard.dart';
@@ -16,18 +16,23 @@ class DesignCategory extends StatefulWidget {
 
 class _DesignCategoryState extends State<DesignCategory> {
   final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
-      .collection('terms').where('termCategory', isEqualTo: 'Design').snapshots();
+      .collection('terms')
+      .where('termCategory', isEqualTo: 'Design')
+      .snapshots();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) => AddTerm(),
-          ));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AddTerm(),
+              ));
         },
         backgroundColor: Colors.black,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       appBar: AppBar(
         elevation: 0,
@@ -43,78 +48,101 @@ class _DesignCategoryState extends State<DesignCategory> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CategoryCard(categoryImage: 'https://www.upload.ee/image/13779591/designCategory.png', categoryName: 'Metaverse', categoryDailyTerm: 'Yalın Metaverse', categoryTermCount: '128',),
+              CategoryCard(
+                categoryImage:
+                    'https://www.upload.ee/image/13779591/designCategory.png',
+                categoryName: 'Metaverse',
+                categoryDailyTerm: 'Yalın Metaverse',
+                categoryTermCount: '128',
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.symmetric(vertical: 8.0),
-                    child: Text("Terimler",style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),),
+                    child: Text(
+                      "Terimler",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
                   Align(
                     alignment: Alignment.topCenter,
-                    child: Container(
-                      child: StreamBuilder<QuerySnapshot>(
-                        stream: _termsStream,
-                        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-                          if (snapshot.hasError) {
-                            return Text('Bir şeyler ters gitmiş olmalı.');
-                          }
+                    child: StreamBuilder<QuerySnapshot>(
+                      stream: _termsStream,
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return const Text('Bir şeyler ters gitmiş olmalı.');
+                        }
 
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return Text('Şu anda içerik yükleniyor.');
-                          }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Text('Şu anda içerik yükleniyor.');
+                        }
 
-                          return MediaQuery.removePadding(
-                            removeTop: true,
-                            context: context,
-                            child: ListView(
-                              primary: false,
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              children: snapshot.data!.docs.map((QueryDocumentSnapshot<Object?> data) {
-                                final String termTitle = data.get('termTitle');
-                                final String termImage = data['termImage'];
-                                final String termMean = data['termMean'];
-                                final String termExample = data['termExample'];
-                                final String termDescription = data['termDescription'];
-                                final String termAuthor = data['termAuthor'];
-                                final String termCategory = data['termCategory'];
-                                final bool isSaved = data['isSaved'];
-                                final String termContributor = data['termContributor'];
-                                return GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) => Term(data: data,)));
-                                  },
-                                  child: ListTile(
-                                    contentPadding:EdgeInsets.all(0),
-                                    leading: ClipOval(
-                                      child: Image.network(data['termImage'],
-                                        height: 50,
-                                        width: 50,
-                                        fit: BoxFit.cover,
-                                      ),
+                        return MediaQuery.removePadding(
+                          removeTop: true,
+                          context: context,
+                          child: ListView(
+                            primary: false,
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            children: snapshot.data!.docs
+                                .map((QueryDocumentSnapshot<Object?> data) {
+                              final String termTitle = data.get('termTitle');
+                              final String termImage = data['termImage'];
+                              final String termMean = data['termMean'];
+                              final String termExample = data['termExample'];
+                              final String termDescription =
+                                  data['termDescription'];
+                              final String termAuthor = data['termAuthor'];
+                              final String termCategory =
+                                  data['termCategory'];
+                              final bool isSaved = data['isSaved'];
+                              final String termContributor =
+                                  data['termContributor'];
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Term(
+                                                data: data,
+                                              )));
+                                },
+                                child: ListTile(
+                                  contentPadding: const EdgeInsets.all(0),
+                                  leading: ClipOval(
+                                    child: Image.network(
+                                      data['termImage'],
+                                      height: 50,
+                                      width: 50,
+                                      fit: BoxFit.cover,
                                     ),
-                                    title: Text(data['termTitle'],
-                                      style: TextStyle(
-                                          fontSize: 16
-                                      ),
-                                    ),
-                                    subtitle: Text(data['termExample'],
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),),
                                   ),
-                                );
-                              }).toList(),
-                            ),
-                          );
-                        },
-                      ),
+                                  title: Text(
+                                    data['termTitle'],
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
+                                  subtitle: Text(
+                                    data['termExample'],
+                                    style: const TextStyle(
+                                      fontSize: 13,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        );
+                      },
                     ),
                   ),
+                  SizedBox(height: 48),
                 ],
               ),
             ],
@@ -124,7 +152,6 @@ class _DesignCategoryState extends State<DesignCategory> {
     );
   }
 }
-
 
 class AddTerm extends StatefulWidget {
   const AddTerm({Key? key}) : super(key: key);
@@ -140,14 +167,14 @@ class _AddTermState extends State<AddTerm> {
   String termExample = '';
   String termDescription = '';
   String termAuthor = '';
-  String _myActivity = '';
   String termCategory = '';
-  String _myActivityResult = '';
   String uid = '';
   String termImage = '';
   String termContributor = '';
   String authorPhotoUrl = '';
+  String sendDate = '';
   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -155,126 +182,139 @@ class _AddTermState extends State<AddTerm> {
         elevation: 0,
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
-        title: Text("Terim oluştur"),
+        title: const Text("Terim oluştur"),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
           children: [
-            TermCard(termImage: 'https://www.upload.ee/image/13824964/fe__2_.png', termName: '', termAuthor: 'Lugat tarafından eklendi'),
+            TermCard(
+                termImage: 'https://www.upload.ee/image/13824964/fe__2_.png',
+                termName: '',
+                termAuthor: 'Lugat tarafından eklendi'),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Container(
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 24),
-                        child: Text("Terim adı", style: TextStyle(fontSize: 17)),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(top: 24),
+                      child:
+                          Text("Terim adı", style: TextStyle(fontSize: 17)),
+                    ),
+                    TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Terim adı boş bırakılamaz';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          termTitle = value;
+                        });
+                      },
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Adını düzenlemek için dokun',
                       ),
-                      TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Terim adı boş bırakılamaz';
-                          } return null;
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            termTitle = value;
-                          });
-                        },
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Adını düzenlemek için dokun',
-                        ),
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 0),
+                      child: Text("Görseli", style: TextStyle(fontSize: 17)),
+                    ),
+                    TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Görsel boş boş bırakılamaz';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          termImage = value;
+                        });
+                      },
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Görsel bağlantısını için dokun',
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 0),
-                        child: Text("Görseli", style: TextStyle(fontSize: 17)),
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                    ),
+                    const Text("Akla gelen ilk anlamı",
+                        style: TextStyle(fontSize: 17)),
+                    TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Akla gelen ilk anlamı boş bırakılamaz';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          termMean = value;
+                        });
+                      },
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText:
+                            'Akla gelen ilk anlamını düzenlemek için dokun',
                       ),
-                      TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Görsel boş boş bırakılamaz';
-                          } return null;
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            termImage = value;
-                          });
-                        },
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Görsel bağlantısını için dokun',
-                        ),
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                    ),
+                    const Text("Örnek", style: TextStyle(fontSize: 17)),
+                    TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Örnek boş bırakılamaz';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          termExample = value;
+                          uid = FirebaseAuth.instance.currentUser!.uid;
+                        });
+                      },
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Örneği düzenlemek için dokun',
                       ),
-                      Text("Akla gelen ilk anlamı", style: TextStyle(fontSize: 17)),
-                      TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Akla gelen ilk anlamı boş bırakılamaz';
-                          } return null;
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            termMean = value;
-                          });
-                        },
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Akla gelen ilk anlamını düzenlemek için dokun',
-                        ),
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                    ),
+                    const Text("Ek açıklamalar", style: TextStyle(fontSize: 17)),
+                    TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Ek açıklamalar boş bırakılamaz';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          termDescription = value;
+                          termCategory = 'Design';
+                          authorPhotoUrl =
+                              FirebaseAuth.instance.currentUser!.photoURL!;
+                        });
+                      },
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Ek açıklamaları düzenlemek için dokun',
                       ),
-                      Text("Örnek", style: TextStyle(fontSize: 17)),
-                      TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Örnek boş bırakılamaz';
-                          } return null;
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            termExample = value;
-                            uid = FirebaseAuth.instance.currentUser!.uid;
-                          });
-                        },
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Örneği düzenlemek için dokun',
-                        ),
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
-                      ),
-                      Text("Ek açıklamalar", style: TextStyle(fontSize: 17)),
-                      TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Ek açıklamalar boş bırakılamaz';
-                          } return null;
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            termDescription = value;
-                            termCategory = 'Design';
-                            authorPhotoUrl = FirebaseAuth.instance.currentUser!.photoURL!;
-                          });
-                        },
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Ek açıklamaları düzenlemek için dokun',
-                        ),
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
-                      ),
-                      Row(
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24),
+                      child: Row(mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ElevatedButton(
                             style: OutlinedButton.styleFrom(
@@ -288,32 +328,47 @@ class _AddTermState extends State<AddTerm> {
                               if (formState == null) return;
                               if (formState.validate() == true) {
                                 formState.save();
-                                FirebaseFirestore.instance.collection('terms').add({
-                                  'termTitle': termTitle, 'termImage': termImage, 'termCategory': termCategory, 'termMean': termMean, 'termExample': termExample, 'termDescription': termDescription, 'termAuthor': '${FirebaseAuth.instance.currentUser!.displayName!}', 'isSaved': false, 'uid': uid, 'termContributor': termContributor, 'authorPhotoUrl': authorPhotoUrl,
+                                FirebaseFirestore.instance
+                                    .collection('terms')
+                                    .add({
+                                  'termTitle': termTitle,
+                                  'termImage': termImage,
+                                  'termCategory': termCategory,
+                                  'termMean': termMean,
+                                  'termExample': termExample,
+                                  'termDescription': termDescription,
+                                  'termAuthor':
+                                      FirebaseAuth.instance.currentUser!.displayName!,
+                                  'isSaved': false,
+                                  'uid': uid,
+                                  'termContributor': FirebaseAuth.instance.currentUser!.displayName!,
+                                  'authorPhotoUrl': authorPhotoUrl,
+                                  'sendDate': DateTime.now(),
                                 });
 
-
-                                Navigator.push(
+                                Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                      const AddTermSuccess()),
+                                          const AddTermSuccess()),
                                 );
                               }
                             },
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
+                            child: const Padding(
+                              padding: EdgeInsets.all(12.0),
                               child: Text("Tamamla"),
                             ),
                           ),
+                          SizedBox(width: 10),
                           TextButton(
-                            onPressed: () {},
-                            child: Text("İptal et"),
+                            onPressed: () {Navigator.pop(context);},
+                            child: const Text("İptal et"),
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: 48),
+                  ],
                 ),
               ),
             ),
@@ -341,18 +396,34 @@ class AddTermSuccess extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.network("https://www.upload.ee/image/13825020/Mask_Group.png", height: 48,),
-            SizedBox(height: 16),
-            Text("Tebrikler!", style: TextStyle(color: Colors.green, fontSize: 22),),
-            SizedBox(height: 4,),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text("Teriminiz ilgili kategoriye eklenmiştir. Katkınız için Lugat topluluğu adına teşekkür ederiz.", style: TextStyle(color: Colors.green), textAlign: TextAlign.center,),
+            Image.network(
+              "https://www.upload.ee/image/13825020/Mask_Group.png",
+              height: 48,
             ),
+            const SizedBox(height: 16),
+            const Text(
+              "Tebrikler!",
+              style: TextStyle(color: Colors.green, fontSize: 22),
+            ),
+            const SizedBox(
+              height: 4,
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                "Teriminiz ilgili kategoriye eklenmiştir. Katkınız için Lugat topluluğu adına teşekkür ederiz.",
+                style: TextStyle(color: Colors.green),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: 24),
+            TextButton(onPressed: () {Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Index()));}, style: ElevatedButton.styleFrom(primary: Colors.green, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))), child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12.0, vertical:6),
+              child: Text("Anasayfaya dön", style: TextStyle(color: Colors.white),),
+            )),
           ],
         ),
       ),
     );
   }
 }
-

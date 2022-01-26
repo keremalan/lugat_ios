@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:lugat_ios/categories/backendCategory.dart';
 import 'package:lugat_ios/categories/designCategory.dart';
@@ -20,7 +21,7 @@ class _ExploreState extends State<Explore> {
         elevation: 0,
         foregroundColor: Colors.black,
         backgroundColor: Colors.white,
-        title: Text("Keşfet"),
+        title: const Text("Keşfet"),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -31,19 +32,26 @@ class _ExploreState extends State<Explore> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: [
-                      GestureDetector(onTap:(){Navigator.push(context, MaterialPageRoute(builder: (context) => DesignCategory()));},child: ExploreCategoriesItem(categoryImage: 'https://www.upload.ee/image/13779591/designCategory.png', categoryName: 'Tasarım')),
-                      GestureDetector(onTap:(){Navigator.push(context, MaterialPageRoute(builder: (context) => BackEndCategory()));},child: ExploreCategoriesItem(categoryImage: 'https://www.upload.ee/image/13824941/be.png', categoryName: 'Back-end')),
-                      GestureDetector(onTap:(){Navigator.push(context, MaterialPageRoute(builder: (context) => OthersCategory()));},child: ExploreCategoriesItem(categoryImage: 'https://www.upload.ee/image/13821620/others__2_.png', categoryName: 'Diğer Terimler'))
+                      GestureDetector(onTap:(){Navigator.push(context, MaterialPageRoute(builder: (context) => const DesignCategory()));},child: ExploreCategoriesItem(categoryImage: 'https://www.upload.ee/image/13779591/designCategory.png', categoryName: 'Tasarım')),
+                      GestureDetector(onTap:(){Navigator.push(context, MaterialPageRoute(builder: (context) => const BackEndCategory()));},child: ExploreCategoriesItem(categoryImage: 'https://www.upload.ee/image/13824941/be.png', categoryName: 'Back-end')),
+                      GestureDetector(onTap:(){Navigator.push(context, MaterialPageRoute(builder: (context) => const OthersCategory()));},child: ExploreCategoriesItem(categoryImage: 'https://www.upload.ee/image/13821620/others__2_.png', categoryName: 'Diğer Terimler'))
                     ],
                   ),
                 ),
-                DesignCategoryOverview(),
-                SoftwareCategoryOverview(),
+                const OthersCategoryOverview(),
+                const MetaverseCategoryOverview(),
+                const AiCategoryOverview(),
+                const DesignCategoryOverview(),
+                const SoftwareCategoryOverview(),
+                const DroneCategoryOverview(),
+                const RoboticCategoryOverview(),
+                const FrontEndCategoryOverview(),
+                const BackEndCategoryOverview(),
               ],
             ),
           ),
@@ -80,10 +88,10 @@ class ExploreCategoriesItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(),
+            const SizedBox(),
             Padding(
               padding: const EdgeInsets.only(bottom: 8, left: 8),
-              child: Text(categoryName, style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w600),),
+              child: Text(categoryName, style: const TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w600),),
             ),
           ],
         ),

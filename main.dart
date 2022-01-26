@@ -19,7 +19,8 @@ class Lugat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
     );
@@ -53,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void goHome() {
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Index()));
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const Index()));
   }
   @override
   Widget build(BuildContext context) {
@@ -78,6 +79,7 @@ class _SplashScreenState extends State<SplashScreen> {
               );
               goHome();
             }, child: Container(
+              width: 220,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
                 border: Border.all(
@@ -94,8 +96,8 @@ class _SplashScreenState extends State<SplashScreen> {
                       height: 16,
                       width: 16,),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Text('Google ile giriş yap',
                         style: TextStyle(
                             color: Colors.black
@@ -104,7 +106,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 ],
               ),
             ))
-                : CircularProgressIndicator())
+                : const CircularProgressIndicator())
           ],
         ));
   }
