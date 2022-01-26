@@ -6,6 +6,9 @@ import 'package:lugat_ios/pages/profile.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:lugat_ios/utilities/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+
+
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -106,7 +109,29 @@ class _SplashScreenState extends State<SplashScreen> {
                 ],
               ),
             ))
-                : const CircularProgressIndicator())
+                : const CircularProgressIndicator()),
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: TextButton(
+                onPressed: () async {
+                  final appleIdCredential = await SignInWithApple.getAppleIDCredential(
+                    scopes: [
+                      AppleIDAuthorizationScopes.email,
+                      AppleIDAuthorizationScopes.fullName,
+                    ],
+                  );
+                  final oAuthProvider = OAuthProvider("apple.com");
+                  final credential = oAuthProvider.credential(
+                    idToken: appleIdCredential.identityToken,
+                    accessToken: appleIdCredential.authorizationCode,
+                  );
+                  await FirebaseAuth.instance.signInWithCredential(credential);
+                  print(credential);
+                  goHome();
+                },
+                child: Text("Gir"),
+              ),
+            ),
           ],
         ));
   }

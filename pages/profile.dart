@@ -17,7 +17,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
-      .collection('terms').where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid).snapshots();
+      .collection('terms').snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,6 +91,7 @@ class _ProfileState extends State<Profile> {
                                   final String termAuthor = data['termAuthor'];
                                   final String termCategory = data['termCategory'];
                                   final bool isSaved = data['isSaved'];
+                                  final String authorPhotoUrl = data['authorPhotoUrl'];
                                   return GestureDetector(
                                     onTap: () {
                                       Navigator.push(context, MaterialPageRoute(
@@ -101,7 +102,7 @@ class _ProfileState extends State<Profile> {
                                         Row(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            ClipRRect(borderRadius: BorderRadius.circular(30),child: Image.network(FirebaseAuth.instance.currentUser!.photoURL!, width: 40, height: 40)),
+                                            ClipRRect(borderRadius: BorderRadius.circular(30),child: Image.network(data['authorPhotoUrl'], width: 40, height: 40)),
                                             const SizedBox(width: 10),
                                             Expanded(
                                               child: Column(
@@ -367,7 +368,7 @@ class ProfileHead extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(FirebaseAuth.instance.currentUser!.displayName!, style: const TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),),
+            Text("Kerem Alan", style: const TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),),
             Row(
               children: const [
                 Text("Geight"),
@@ -382,7 +383,7 @@ class ProfileHead extends StatelessWidget {
         ),
         ClipRRect(
           borderRadius: BorderRadius.circular(30),
-          child: Image.network(FirebaseAuth.instance.currentUser!.photoURL!,
+          child: Image.network("https://media-exp1.licdn.com/dms/image/C4D03AQEQpZW5_sX-LA/profile-displayphoto-shrink_400_400/0/1641093536875?e=1648684800&v=beta&t=rl6iVAeuKF39QlLSOOEBHr609ch7fvMUKCyIKN0NlPw",
           height: 42,
           width: 42,
           ),
@@ -454,7 +455,7 @@ class _PersonalSettingsState extends State<PersonalSettings> {
           color: Colors.white,
           child: Column(
             children: [
-              HamburgerItem(itemTitle: 'İsim', itemDescription: FirebaseAuth.instance.currentUser!.displayName!),
+              //HamburgerItem(itemTitle: 'İsim', itemDescription: FirebaseAuth.instance.currentUser!.displayName!),
             ],
           ),
         ),
@@ -487,7 +488,7 @@ class _SecuritySettingsState extends State<SecuritySettings> {
           child: Column(
             children: [
               HamburgerItem(itemTitle: 'Şifre', itemDescription: '*******'),
-              HamburgerItem(itemTitle: 'E-Posta', itemDescription: FirebaseAuth.instance.currentUser!.email!),
+              //HamburgerItem(itemTitle: 'E-Posta', itemDescription: FirebaseAuth.instance.currentUser!.email!),
             ],
           ),
         ),
