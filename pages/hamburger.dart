@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lugat_ios/main.dart';
 import 'package:lugat_ios/pages/profile.dart';
+import 'package:lugat_ios/utilities/google_sign_in.dart';
 
 class Hamburger extends StatefulWidget {
   const Hamburger({Key? key}) : super(key: key);

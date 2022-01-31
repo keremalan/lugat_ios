@@ -192,7 +192,7 @@ class AddTermSuccess extends StatelessWidget {
             const SizedBox(height: 4,),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text("Teriminiz ilgili kategoriye eklenmiştir. Katkınız için Lugat topluluğu adına teşekkür ederiz.", style: TextStyle(color: Colors.green), textAlign: TextAlign.center,),
+              child: Text("Teriminiz moderatör onayına gönderilmiştir. Katkınız için Lugat topluluğu adına teşekkür ederiz.", style: TextStyle(color: Colors.green), textAlign: TextAlign.center,),
             ),
           ],
         ),

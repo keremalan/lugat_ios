@@ -3,13 +3,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lugat_ios/categories/aiCategory.dart';
+import 'package:lugat_ios/categories/architectureCategory.dart';
 import 'package:lugat_ios/categories/backendCategory.dart';
+import 'package:lugat_ios/categories/computerHardware.dart';
+import 'package:lugat_ios/categories/designCategory.dart';
 import 'package:lugat_ios/categories/droneCategory.dart';
 import 'package:lugat_ios/categories/frontendCategory.dart';
 import 'package:lugat_ios/categories/metaverseCategory.dart';
 import 'package:lugat_ios/categories/othersCategory.dart';
 import 'package:lugat_ios/categories/roboticsCategory.dart';
 import 'package:lugat_ios/categories/softwareCategory.dart';
+import 'package:lugat_ios/categories/uiCategory.dart';
+import 'package:lugat_ios/categories/uxCategory.dart';
 import 'package:lugat_ios/pages/hamburger.dart';
 import 'package:lugat_ios/pages/term.dart';
 import 'package:lugat_ios/widgets/categoryCard.dart';
@@ -23,8 +28,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
-      .collection('terms').snapshots();
+  final Stream<QuerySnapshot> _termsStream =
+      FirebaseFirestore.instance.collection('terms').snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,11 +84,25 @@ class _HomeState extends State<Home> {
                           popCategoryTitle: 'Diğerleri'),
                     ),
                     GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const ArchitectureCategory()));
+                      },
+                      child: PopularCategoryItem(
+                          popCategoryImage:
+                              'https://www.upload.ee/image/13838969/architecture.png',
+                          popCategoryTitle: 'Mimari'),
+                    ),
+                    GestureDetector(
                         onTap: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const MetaverseCategory()));
+                                  builder: (context) =>
+                                      const MetaverseCategory()));
                         },
                         child: PopularCategoryItem(
                           popCategoryImage:
@@ -107,7 +126,8 @@ class _HomeState extends State<Home> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const RoboticsCategory()));
+                                  builder: (context) =>
+                                      const RoboticsCategory()));
                         },
                         child: PopularCategoryItem(
                           popCategoryImage:
@@ -131,7 +151,8 @@ class _HomeState extends State<Home> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const FrontEndCategory()));
+                                  builder: (context) =>
+                                      const FrontEndCategory()));
                         },
                         child: PopularCategoryItem(
                           popCategoryImage:
@@ -143,12 +164,78 @@ class _HomeState extends State<Home> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const BackEndCategory()));
+                                  builder: (context) =>
+                                      const BackEndCategory()));
                         },
                         child: PopularCategoryItem(
                           popCategoryImage:
                               'https://www.upload.ee/image/13824941/be.png',
                           popCategoryTitle: 'Back-end',
+                        )),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                  const UICategory()));
+                        },
+                        child: PopularCategoryItem(
+                          popCategoryImage:
+                          'https://www.upload.ee/image/13844724/ui.png',
+                          popCategoryTitle: 'UI',
+                        )),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                  const UXCategory()));
+                        },
+                        child: PopularCategoryItem(
+                          popCategoryImage:
+                          'https://www.upload.ee/image/13844734/ux.png',
+                          popCategoryTitle: 'UX',
+                        )),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                  const ComputerHardwareCategory()));
+                        },
+                        child: PopularCategoryItem(
+                          popCategoryImage:
+                          'https://www.upload.ee/image/13838754/comware.png',
+                          popCategoryTitle: 'Donanımlar',
+                        )),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                  const SoftwareCategory()));
+                        },
+                        child: PopularCategoryItem(
+                          popCategoryImage:
+                          'https://www.upload.ee/image/13838742/software.png',
+                          popCategoryTitle: 'Yazılım',
+                        )),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                  const DesignCategory()));
+                        },
+                        child: PopularCategoryItem(
+                          popCategoryImage:
+                          'https://www.upload.ee/image/13779591/designCategory.png',
+                          popCategoryTitle: 'Tasarım',
                         )),
                   ],
                 ),
@@ -159,13 +246,13 @@ class _HomeState extends State<Home> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MetaverseCategory()));
+                            builder: (context) => const AiCategory()));
                   },
                   child: CategoryCard(
                     categoryImage:
-                        'https://www.upload.ee/image/13813390/metaverse.png',
-                    categoryName: 'Metaverse',
-                    categoryDailyTerm: 'Yalın Metaverse',
+                        'https://www.upload.ee/image/13824919/ai.png',
+                    categoryName: 'Yapay Zeka',
+                    categoryDailyTerm: 'Fuzzy Logic',
                     categoryTermCount: '128',
                   )),
               const SizedBox(height: 16),
@@ -177,12 +264,14 @@ class _HomeState extends State<Home> {
                       alignment: Alignment.topCenter,
                       child: StreamBuilder<QuerySnapshot>(
                         stream: _termsStream,
-                        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (snapshot.hasError) {
                             return const Text('Bir şeyler ters gitmiş olmalı.');
                           }
 
-                          if (snapshot.connectionState == ConnectionState.waiting) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
                             return const Text('Şu anda içerik yükleniyor.');
                           }
 
@@ -193,42 +282,74 @@ class _HomeState extends State<Home> {
                               primary: false,
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
-                              children: snapshot.data!.docs.map((QueryDocumentSnapshot<Object?> data) {
+                              children: snapshot.data!.docs
+                                  .map((QueryDocumentSnapshot<Object?> data) {
                                 final String termTitle = data.get('termTitle');
                                 final String termImage = data['termImage'];
                                 final String termMean = data['termMean'];
                                 final String termExample = data['termExample'];
-                                final String termDescription = data['termDescription'];
+                                final String termDescription =
+                                    data['termDescription'];
                                 final String termAuthor = data['termAuthor'];
-                                final String termCategory = data['termCategory'];
+                                final String termCategory =
+                                    data['termCategory'];
                                 final bool isSaved = data['isSaved'];
-                                final String authorPhotoUrl = data['authorPhotoUrl'];
+                                final String authorPhotoUrl =
+                                    data['authorPhotoUrl'];
                                 return GestureDetector(
                                   onTap: () {
-                                    Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) => Term(data: data,)));
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Term(
+                                                  data: data,
+                                                )));
                                   },
                                   child: Column(
                                     children: [
                                       Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          ClipRRect(borderRadius: BorderRadius.circular(30),child: Image.network(data['authorPhotoUrl'], width: 40, height: 40)),
+                                          ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              child: Image.network(
+                                                  data['authorPhotoUrl'],
+                                                  width: 40,
+                                                  height: 40)),
                                           const SizedBox(width: 10),
                                           Expanded(
                                             child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Row(
                                                   children: [
                                                     Text(data['termAuthor']),
-                                                    Text("", style: TextStyle(fontSize: 12, color: Colors.black.withOpacity(0.4))),
+                                                    Text("",
+                                                        style: TextStyle(
+                                                            fontSize: 12,
+                                                            color: Colors.black
+                                                                .withOpacity(
+                                                                    0.4))),
                                                   ],
                                                 ),
-                                                const SizedBox(height: 2,),
+                                                const SizedBox(
+                                                  height: 2,
+                                                ),
                                                 Row(
                                                   children: [
-                                                    Flexible(fit: FlexFit.loose, child: Text(data['termMean'], style: TextStyle(fontSize: 13, color: Colors.black.withOpacity(0.6)))),
+                                                    Flexible(
+                                                        fit: FlexFit.loose,
+                                                        child: Text(
+                                                            data['termMean'],
+                                                            style: TextStyle(
+                                                                fontSize: 13,
+                                                                color: Colors
+                                                                    .black
+                                                                    .withOpacity(
+                                                                        0.6)))),
                                                   ],
                                                 ),
                                                 const SizedBox(
@@ -240,31 +361,50 @@ class _HomeState extends State<Home> {
                                         ],
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.only(left: 52),
+                                        padding:
+                                            const EdgeInsets.only(left: 52),
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             const SizedBox(height: 4),
                                             Container(
                                               width: 396,
                                               height: 200,
                                               decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(6),
+                                                borderRadius:
+                                                    BorderRadius.circular(6),
                                                 image: DecorationImage(
                                                   fit: BoxFit.cover,
-                                                  image: NetworkImage(data['termImage']),
-                                                  colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.18), BlendMode.darken),
+                                                  image: NetworkImage(
+                                                      data['termImage']),
+                                                  colorFilter: ColorFilter.mode(
+                                                      Colors.black
+                                                          .withOpacity(0.18),
+                                                      BlendMode.darken),
                                                 ),
                                               ),
                                               child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.end,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Padding(
-                                                    padding: const EdgeInsets.only(left: 12, bottom: 12),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 12,
+                                                            bottom: 12),
                                                     child: Column(
                                                       children: [
-                                                        Text(data['termTitle'], style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 17)),
+                                                        Text(data['termTitle'],
+                                                            style: const TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontSize: 17)),
                                                       ],
                                                     ),
                                                   ),
@@ -298,18 +438,19 @@ class _HomeState extends State<Home> {
   }
 }
 
-class SoftwareCategoryOverview extends StatefulWidget {
-  const SoftwareCategoryOverview({
+class UXCategoryOverview extends StatefulWidget {
+  const UXCategoryOverview({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<SoftwareCategoryOverview> createState() => _SoftwareCategoryOverviewState();
+  State<UXCategoryOverview> createState() => _UXCategoryOverviewState();
 }
-class _SoftwareCategoryOverviewState extends State<SoftwareCategoryOverview> {
+
+class _UXCategoryOverviewState extends State<UXCategoryOverview> {
   final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
       .collection('terms')
-      .where("termCategory", isEqualTo: 'Software')
+      .where("termCategory", isEqualTo: 'UX')
       .limit(3)
       .snapshots();
 
@@ -321,7 +462,7 @@ class _SoftwareCategoryOverviewState extends State<SoftwareCategoryOverview> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text(
-              "Yazılım",
+              "UX",
               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
             ),
             TextButton(
@@ -342,8 +483,8 @@ class _SoftwareCategoryOverviewState extends State<SoftwareCategoryOverview> {
           alignment: Alignment.topCenter,
           child: StreamBuilder<QuerySnapshot>(
             stream: _termsStream,
-            builder: (BuildContext context,
-                AsyncSnapshot<QuerySnapshot> snapshot) {
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               try {
                 if (snapshot.hasError) {
                   return const Text('Bir şeyler ters gitmiş olmalı.');
@@ -370,8 +511,8 @@ class _SoftwareCategoryOverviewState extends State<SoftwareCategoryOverview> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Term(
-                                  data: data,
-                                )));
+                                      data: data,
+                                    )));
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -414,7 +555,597 @@ class _SoftwareCategoryOverviewState extends State<SoftwareCategoryOverview> {
                         primary: false,
                         shrinkWrap: true,
                         gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 1 / 1.4,
+                          crossAxisCount: 3,
+                        ),
+                        itemCount: items.length,
+                        padding: const EdgeInsets.only(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return items[index];
+                        }),
+                  );
+                } else {
+                  return Column(
+                    children: const [
+                      Text("Bir hata meydana geldi!"),
+                    ],
+                  );
+                }
+              } catch (Exc) {
+                print(Exc);
+                rethrow;
+              }
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class UICategoryOverview extends StatefulWidget {
+  const UICategoryOverview({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<UICategoryOverview> createState() => _UICategoryOverviewState();
+}
+
+class _UICategoryOverviewState extends State<UICategoryOverview> {
+  final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
+      .collection('terms')
+      .where("termCategory", isEqualTo: 'UI')
+      .limit(3)
+      .snapshots();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "UI",
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SoftwareCategory()));
+              },
+              child: Text(
+                "Tümünü gör",
+                style: TextStyle(color: Colors.black.withOpacity(0.8)),
+              ),
+            ),
+          ],
+        ),
+        Align(
+          alignment: Alignment.topCenter,
+          child: StreamBuilder<QuerySnapshot>(
+            stream: _termsStream,
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              try {
+                if (snapshot.hasError) {
+                  return const Text('Bir şeyler ters gitmiş olmalı.');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Text('Şu anda içerik yükleniyor.');
+                }
+
+                if (snapshot.hasData) {
+                  final items = snapshot.data!.docs
+                      .map((QueryDocumentSnapshot<Object?> data) {
+                    final String termTitle = data.get('termTitle');
+                    final String termImage = data['termImage'];
+                    final String termMean = data['termMean'];
+                    final String termExample = data['termExample'];
+                    final String termDescription = data['termDescription'];
+                    final String termAuthor = data['termAuthor'];
+                    final String termCategory = data['termCategory'];
+                    final bool isSaved = data['isSaved'];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Term(
+                                      data: data,
+                                    )));
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(6),
+                            child: Image.network(
+                              data['termImage'],
+                              height: 106,
+                              width: 106,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          SizedBox(
+                            width: 100,
+                            child: Text(
+                              data['termTitle'],
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Text(
+                            data['termAuthor'],
+                            style: TextStyle(
+                              overflow: TextOverflow.ellipsis,
+                              fontSize: 12,
+                              color: Colors.black.withOpacity(0.4),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList();
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: GridView.builder(
+                        primary: false,
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 1 / 1.4,
+                          crossAxisCount: 3,
+                        ),
+                        itemCount: items.length,
+                        padding: const EdgeInsets.only(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return items[index];
+                        }),
+                  );
+                } else {
+                  return Column(
+                    children: const [
+                      Text("Bir hata meydana geldi!"),
+                    ],
+                  );
+                }
+              } catch (Exc) {
+                print(Exc);
+                rethrow;
+              }
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class SoftwareCategoryOverview extends StatefulWidget {
+  const SoftwareCategoryOverview({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<SoftwareCategoryOverview> createState() =>
+      _SoftwareCategoryOverviewState();
+}
+
+class _SoftwareCategoryOverviewState extends State<SoftwareCategoryOverview> {
+  final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
+      .collection('terms')
+      .where("termCategory", isEqualTo: 'Software')
+      .limit(3)
+      .snapshots();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Yazılım",
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SoftwareCategory()));
+              },
+              child: Text(
+                "Tümünü gör",
+                style: TextStyle(color: Colors.black.withOpacity(0.8)),
+              ),
+            ),
+          ],
+        ),
+        Align(
+          alignment: Alignment.topCenter,
+          child: StreamBuilder<QuerySnapshot>(
+            stream: _termsStream,
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              try {
+                if (snapshot.hasError) {
+                  return const Text('Bir şeyler ters gitmiş olmalı.');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Text('Şu anda içerik yükleniyor.');
+                }
+
+                if (snapshot.hasData) {
+                  final items = snapshot.data!.docs
+                      .map((QueryDocumentSnapshot<Object?> data) {
+                    final String termTitle = data.get('termTitle');
+                    final String termImage = data['termImage'];
+                    final String termMean = data['termMean'];
+                    final String termExample = data['termExample'];
+                    final String termDescription = data['termDescription'];
+                    final String termAuthor = data['termAuthor'];
+                    final String termCategory = data['termCategory'];
+                    final bool isSaved = data['isSaved'];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Term(
+                                      data: data,
+                                    )));
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(6),
+                            child: Image.network(
+                              data['termImage'],
+                              height: 106,
+                              width: 106,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          SizedBox(
+                            width: 100,
+                            child: Text(
+                              data['termTitle'],
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Text(
+                            data['termAuthor'],
+                            style: TextStyle(
+                              overflow: TextOverflow.ellipsis,
+                              fontSize: 12,
+                              color: Colors.black.withOpacity(0.4),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList();
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: GridView.builder(
+                        primary: false,
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 1 / 1.4,
+                          crossAxisCount: 3,
+                        ),
+                        itemCount: items.length,
+                        padding: const EdgeInsets.only(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return items[index];
+                        }),
+                  );
+                } else {
+                  return Column(
+                    children: const [
+                      Text("Bir hata meydana geldi!"),
+                    ],
+                  );
+                }
+              } catch (Exc) {
+                print(Exc);
+                rethrow;
+              }
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class ComputerHardwareCategoryOverview extends StatefulWidget {
+  const ComputerHardwareCategoryOverview({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<ComputerHardwareCategoryOverview> createState() =>
+      _ComputerHardwareCategoryOverviewState();
+}
+
+class _ComputerHardwareCategoryOverviewState
+    extends State<ComputerHardwareCategoryOverview> {
+  final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
+      .collection('terms')
+      .where("termCategory", isEqualTo: 'comware')
+      .limit(3)
+      .snapshots();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Bilgisayar Donanımları",
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const ComputerHardwareCategory()));
+              },
+              child: Text(
+                "Tümünü gör",
+                style: TextStyle(color: Colors.black.withOpacity(0.8)),
+              ),
+            ),
+          ],
+        ),
+        Align(
+          alignment: Alignment.topCenter,
+          child: StreamBuilder<QuerySnapshot>(
+            stream: _termsStream,
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              try {
+                if (snapshot.hasError) {
+                  return const Text('Bir şeyler ters gitmiş olmalı.');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Text('Şu anda içerik yükleniyor.');
+                }
+
+                if (snapshot.hasData) {
+                  final items = snapshot.data!.docs
+                      .map((QueryDocumentSnapshot<Object?> data) {
+                    final String termTitle = data.get('termTitle');
+                    final String termImage = data['termImage'];
+                    final String termMean = data['termMean'];
+                    final String termExample = data['termExample'];
+                    final String termDescription = data['termDescription'];
+                    final String termAuthor = data['termAuthor'];
+                    final String termCategory = data['termCategory'];
+                    final bool isSaved = data['isSaved'];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Term(
+                                      data: data,
+                                    )));
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(6),
+                            child: Image.network(
+                              data['termImage'],
+                              height: 106,
+                              width: 106,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          SizedBox(
+                            width: 100,
+                            child: Text(
+                              data['termTitle'],
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Text(
+                            data['termAuthor'],
+                            style: TextStyle(
+                              overflow: TextOverflow.ellipsis,
+                              fontSize: 12,
+                              color: Colors.black.withOpacity(0.4),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList();
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: GridView.builder(
+                        primary: false,
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 1 / 1.4,
+                          crossAxisCount: 3,
+                        ),
+                        itemCount: items.length,
+                        padding: const EdgeInsets.only(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return items[index];
+                        }),
+                  );
+                } else {
+                  return Column(
+                    children: const [
+                      Text("Bir hata meydana geldi!"),
+                    ],
+                  );
+                }
+              } catch (Exc) {
+                print(Exc);
+                rethrow;
+              }
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class ArchitectureCategoryOverview extends StatefulWidget {
+  const ArchitectureCategoryOverview({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<ArchitectureCategoryOverview> createState() =>
+      _ArchitectureCategoryOverviewState();
+}
+
+class _ArchitectureCategoryOverviewState
+    extends State<ArchitectureCategoryOverview> {
+  final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
+      .collection('terms')
+      .where("termCategory", isEqualTo: 'architecture')
+      .limit(3)
+      .snapshots();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Mimari",
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ArchitectureCategory()));
+              },
+              child: Text(
+                "Tümünü gör",
+                style: TextStyle(color: Colors.black.withOpacity(0.8)),
+              ),
+            ),
+          ],
+        ),
+        Align(
+          alignment: Alignment.topCenter,
+          child: StreamBuilder<QuerySnapshot>(
+            stream: _termsStream,
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              try {
+                if (snapshot.hasError) {
+                  return const Text('Bir şeyler ters gitmiş olmalı.');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Text('Şu anda içerik yükleniyor.');
+                }
+
+                if (snapshot.hasData) {
+                  final items = snapshot.data!.docs
+                      .map((QueryDocumentSnapshot<Object?> data) {
+                    final String termTitle = data.get('termTitle');
+                    final String termImage = data['termImage'];
+                    final String termMean = data['termMean'];
+                    final String termExample = data['termExample'];
+                    final String termDescription = data['termDescription'];
+                    final String termAuthor = data['termAuthor'];
+                    final String termCategory = data['termCategory'];
+                    final bool isSaved = data['isSaved'];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Term(
+                                      data: data,
+                                    )));
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(6),
+                            child: Image.network(
+                              data['termImage'],
+                              height: 106,
+                              width: 106,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          SizedBox(
+                            width: 100,
+                            child: Text(
+                              data['termTitle'],
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Text(
+                            data['termAuthor'],
+                            style: TextStyle(
+                              overflow: TextOverflow.ellipsis,
+                              fontSize: 12,
+                              color: Colors.black.withOpacity(0.4),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList();
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: GridView.builder(
+                        primary: false,
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           childAspectRatio: 1 / 1.4,
                           crossAxisCount: 3,
                         ),
@@ -475,7 +1206,7 @@ class _DesignCategoryOverviewState extends State<DesignCategoryOverview> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const SoftwareCategory()));
+                        builder: (context) => const DesignCategory()));
               },
               child: Text(
                 "Tümünü gör",
@@ -488,8 +1219,8 @@ class _DesignCategoryOverviewState extends State<DesignCategoryOverview> {
           alignment: Alignment.topCenter,
           child: StreamBuilder<QuerySnapshot>(
             stream: _termsStream,
-            builder: (BuildContext context,
-                AsyncSnapshot<QuerySnapshot> snapshot) {
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               try {
                 if (snapshot.hasError) {
                   return const Text('Bir şeyler ters gitmiş olmalı.');
@@ -634,8 +1365,8 @@ class _AiCategoryOverviewState extends State<AiCategoryOverview> {
           alignment: Alignment.topCenter,
           child: StreamBuilder<QuerySnapshot>(
             stream: _termsStream,
-            builder: (BuildContext context,
-                AsyncSnapshot<QuerySnapshot> snapshot) {
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               try {
                 if (snapshot.hasError) {
                   return const Text('Bir şeyler ters gitmiş olmalı.');
@@ -662,8 +1393,8 @@ class _AiCategoryOverviewState extends State<AiCategoryOverview> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Term(
-                                  data: data,
-                                )));
+                                      data: data,
+                                    )));
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -706,7 +1437,7 @@ class _AiCategoryOverviewState extends State<AiCategoryOverview> {
                         primary: false,
                         shrinkWrap: true,
                         gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           childAspectRatio: 1 / 1.4,
                           crossAxisCount: 3,
                         ),
@@ -741,7 +1472,8 @@ class BackEndCategoryOverview extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<BackEndCategoryOverview> createState() => _BackEndCategoryOverviewState();
+  State<BackEndCategoryOverview> createState() =>
+      _BackEndCategoryOverviewState();
 }
 
 class _BackEndCategoryOverviewState extends State<BackEndCategoryOverview> {
@@ -780,8 +1512,8 @@ class _BackEndCategoryOverviewState extends State<BackEndCategoryOverview> {
           alignment: Alignment.topCenter,
           child: StreamBuilder<QuerySnapshot>(
             stream: _termsStream,
-            builder: (BuildContext context,
-                AsyncSnapshot<QuerySnapshot> snapshot) {
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               try {
                 if (snapshot.hasError) {
                   return const Text('Bir şeyler ters gitmiş olmalı.');
@@ -808,8 +1540,8 @@ class _BackEndCategoryOverviewState extends State<BackEndCategoryOverview> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Term(
-                                  data: data,
-                                )));
+                                      data: data,
+                                    )));
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -852,7 +1584,7 @@ class _BackEndCategoryOverviewState extends State<BackEndCategoryOverview> {
                         primary: false,
                         shrinkWrap: true,
                         gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           childAspectRatio: 1 / 1.4,
                           crossAxisCount: 3,
                         ),
@@ -926,8 +1658,8 @@ class _DroneCategoryOverviewState extends State<DroneCategoryOverview> {
           alignment: Alignment.topCenter,
           child: StreamBuilder<QuerySnapshot>(
             stream: _termsStream,
-            builder: (BuildContext context,
-                AsyncSnapshot<QuerySnapshot> snapshot) {
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               try {
                 if (snapshot.hasError) {
                   return const Text('Bir şeyler ters gitmiş olmalı.');
@@ -954,8 +1686,8 @@ class _DroneCategoryOverviewState extends State<DroneCategoryOverview> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Term(
-                                  data: data,
-                                )));
+                                      data: data,
+                                    )));
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -998,7 +1730,7 @@ class _DroneCategoryOverviewState extends State<DroneCategoryOverview> {
                         primary: false,
                         shrinkWrap: true,
                         gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           childAspectRatio: 1 / 1.4,
                           crossAxisCount: 3,
                         ),
@@ -1033,7 +1765,8 @@ class FrontEndCategoryOverview extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<FrontEndCategoryOverview> createState() => _FrontEndCategoryOverviewState();
+  State<FrontEndCategoryOverview> createState() =>
+      _FrontEndCategoryOverviewState();
 }
 
 class _FrontEndCategoryOverviewState extends State<FrontEndCategoryOverview> {
@@ -1072,8 +1805,8 @@ class _FrontEndCategoryOverviewState extends State<FrontEndCategoryOverview> {
           alignment: Alignment.topCenter,
           child: StreamBuilder<QuerySnapshot>(
             stream: _termsStream,
-            builder: (BuildContext context,
-                AsyncSnapshot<QuerySnapshot> snapshot) {
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               try {
                 if (snapshot.hasError) {
                   return const Text('Bir şeyler ters gitmiş olmalı.');
@@ -1100,8 +1833,8 @@ class _FrontEndCategoryOverviewState extends State<FrontEndCategoryOverview> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Term(
-                                  data: data,
-                                )));
+                                      data: data,
+                                    )));
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1144,7 +1877,7 @@ class _FrontEndCategoryOverviewState extends State<FrontEndCategoryOverview> {
                         primary: false,
                         shrinkWrap: true,
                         gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           childAspectRatio: 1 / 1.4,
                           crossAxisCount: 3,
                         ),
@@ -1179,7 +1912,8 @@ class MetaverseCategoryOverview extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<MetaverseCategoryOverview> createState() => _MetaverseCategoryOverviewState();
+  State<MetaverseCategoryOverview> createState() =>
+      _MetaverseCategoryOverviewState();
 }
 
 class _MetaverseCategoryOverviewState extends State<MetaverseCategoryOverview> {
@@ -1205,7 +1939,7 @@ class _MetaverseCategoryOverviewState extends State<MetaverseCategoryOverview> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const AiCategory()));
+                        builder: (context) => const MetaverseCategory()));
               },
               child: Text(
                 "Tümünü gör",
@@ -1218,8 +1952,8 @@ class _MetaverseCategoryOverviewState extends State<MetaverseCategoryOverview> {
           alignment: Alignment.topCenter,
           child: StreamBuilder<QuerySnapshot>(
             stream: _termsStream,
-            builder: (BuildContext context,
-                AsyncSnapshot<QuerySnapshot> snapshot) {
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               try {
                 if (snapshot.hasError) {
                   return const Text('Bir şeyler ters gitmiş olmalı.');
@@ -1246,8 +1980,8 @@ class _MetaverseCategoryOverviewState extends State<MetaverseCategoryOverview> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Term(
-                                  data: data,
-                                )));
+                                      data: data,
+                                    )));
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1290,7 +2024,7 @@ class _MetaverseCategoryOverviewState extends State<MetaverseCategoryOverview> {
                         primary: false,
                         shrinkWrap: true,
                         gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           childAspectRatio: 1 / 1.4,
                           crossAxisCount: 3,
                         ),
@@ -1351,7 +2085,7 @@ class _OthersCategoryOverviewState extends State<OthersCategoryOverview> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const AiCategory()));
+                        builder: (context) => const OthersCategory()));
               },
               child: Text(
                 "Tümünü gör",
@@ -1364,8 +2098,8 @@ class _OthersCategoryOverviewState extends State<OthersCategoryOverview> {
           alignment: Alignment.topCenter,
           child: StreamBuilder<QuerySnapshot>(
             stream: _termsStream,
-            builder: (BuildContext context,
-                AsyncSnapshot<QuerySnapshot> snapshot) {
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               try {
                 if (snapshot.hasError) {
                   return const Text('Bir şeyler ters gitmiş olmalı.');
@@ -1392,8 +2126,8 @@ class _OthersCategoryOverviewState extends State<OthersCategoryOverview> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Term(
-                                  data: data,
-                                )));
+                                      data: data,
+                                    )));
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1436,7 +2170,7 @@ class _OthersCategoryOverviewState extends State<OthersCategoryOverview> {
                         primary: false,
                         shrinkWrap: true,
                         gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           childAspectRatio: 1 / 1.4,
                           crossAxisCount: 3,
                         ),
@@ -1471,7 +2205,8 @@ class RoboticCategoryOverview extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<RoboticCategoryOverview> createState() => _RoboticCategoryOverviewState();
+  State<RoboticCategoryOverview> createState() =>
+      _RoboticCategoryOverviewState();
 }
 
 class _RoboticCategoryOverviewState extends State<RoboticCategoryOverview> {
@@ -1497,7 +2232,7 @@ class _RoboticCategoryOverviewState extends State<RoboticCategoryOverview> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const AiCategory()));
+                        builder: (context) => const RoboticsCategory()));
               },
               child: Text(
                 "Tümünü gör",
@@ -1510,8 +2245,8 @@ class _RoboticCategoryOverviewState extends State<RoboticCategoryOverview> {
           alignment: Alignment.topCenter,
           child: StreamBuilder<QuerySnapshot>(
             stream: _termsStream,
-            builder: (BuildContext context,
-                AsyncSnapshot<QuerySnapshot> snapshot) {
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               try {
                 if (snapshot.hasError) {
                   return const Text('Bir şeyler ters gitmiş olmalı.');
@@ -1538,8 +2273,8 @@ class _RoboticCategoryOverviewState extends State<RoboticCategoryOverview> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Term(
-                                  data: data,
-                                )));
+                                      data: data,
+                                    )));
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1582,7 +2317,7 @@ class _RoboticCategoryOverviewState extends State<RoboticCategoryOverview> {
                         primary: false,
                         shrinkWrap: true,
                         gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           childAspectRatio: 1 / 1.4,
                           crossAxisCount: 3,
                         ),

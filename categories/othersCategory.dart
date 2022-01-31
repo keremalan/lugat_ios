@@ -38,7 +38,7 @@ class _OthersCategoryState extends State<OthersCategory> {
         elevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
-        title: const Text("Back-end"),
+        title: const Text("Diğer terimler"),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -51,8 +51,8 @@ class _OthersCategoryState extends State<OthersCategory> {
               CategoryCard(
                 categoryImage:
                     'https://www.upload.ee/image/13821620/others__2_.png',
-                categoryName: 'Back-end',
-                categoryDailyTerm: 'NoSQL',
+                categoryName: 'Diğer terimler',
+                categoryDailyTerm: 'Uzaktan eğitim',
                 categoryTermCount: '1337',
               ),
               Column(
@@ -174,6 +174,7 @@ class _AddTermState extends State<AddTerm> {
   String authorPhotoUrl = '';
   String sendDate = '';
   final _formKey = GlobalKey<FormState>();
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -330,7 +331,7 @@ class _AddTermState extends State<AddTerm> {
                               if (formState.validate() == true) {
                                 formState.save();
                                 FirebaseFirestore.instance
-                                    .collection('terms')
+                                    .collection('addedTerms')
                                     .add({
                                   'termTitle': termTitle,
                                   'termImage': termImage,
@@ -339,10 +340,10 @@ class _AddTermState extends State<AddTerm> {
                                   'termExample': termExample,
                                   'termDescription': termDescription,
                                   'termAuthor':
-                                      FirebaseAuth.instance.currentUser!.displayName!,
+                                  auth.currentUser!.displayName,
                                   'isSaved': false,
                                   'uid': uid,
-                                  'termContributor': FirebaseAuth.instance.currentUser!.displayName!,
+                                  'termContributor': auth.currentUser!.displayName,
                                   'authorPhotoUrl': authorPhotoUrl,
                                   'sendDate': DateTime.now(),
                                 });

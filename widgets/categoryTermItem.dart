@@ -21,7 +21,7 @@ class PopularCategoryItem extends StatelessWidget {
         padding: EdgeInsets.only(right: 2),
         child: Column(
           children: [
-            ClipRRect( borderRadius: BorderRadius.circular(300),child: Image.network(popCategoryImage, height: 60, width: 60)),
+            ClipRRect( borderRadius: BorderRadius.circular(300),child: Image.network(popCategoryImage, height: 60, width: 60, fit: BoxFit.cover)),
             const SizedBox(height: 4),
             Text(popCategoryTitle, style: TextStyle(overflow: TextOverflow.ellipsis, color: Colors.black.withOpacity(0.6))),
           ],

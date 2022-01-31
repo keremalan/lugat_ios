@@ -51,8 +51,8 @@ class _DesignCategoryState extends State<DesignCategory> {
               CategoryCard(
                 categoryImage:
                     'https://www.upload.ee/image/13779591/designCategory.png',
-                categoryName: 'Metaverse',
-                categoryDailyTerm: 'Yalın Metaverse',
+                categoryName: 'Tasarım',
+                categoryDailyTerm: 'Vektörel grafik',
                 categoryTermCount: '128',
               ),
               Column(
@@ -161,6 +161,7 @@ class AddTerm extends StatefulWidget {
 }
 
 class _AddTermState extends State<AddTerm> {
+  FirebaseAuth auth = FirebaseAuth.instance;
   final Map<String, dynamic> entry = {};
   String termTitle = '';
   String termMean = '';
@@ -177,6 +178,10 @@ class _AddTermState extends State<AddTerm> {
 
   @override
   Widget build(BuildContext context) {
+    final Stream<QuerySnapshot> _userStream = FirebaseFirestore.instance
+        .collection('users')
+        .where('uid', isEqualTo: auth.currentUser!.uid)
+        .snapshots();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -279,7 +284,7 @@ class _AddTermState extends State<AddTerm> {
                       onChanged: (value) {
                         setState(() {
                           termExample = value;
-                          uid = FirebaseAuth.instance.currentUser!.uid;
+                          uid = auth.currentUser!.uid;
                         });
                       },
                       decoration: const InputDecoration(
@@ -301,8 +306,7 @@ class _AddTermState extends State<AddTerm> {
                         setState(() {
                           termDescription = value;
                           termCategory = 'Design';
-                          authorPhotoUrl =
-                              FirebaseAuth.instance.currentUser!.photoURL!;
+                          authorPhotoUrl = '';
                         });
                       },
                       decoration: const InputDecoration(
@@ -329,7 +333,7 @@ class _AddTermState extends State<AddTerm> {
                               if (formState.validate() == true) {
                                 formState.save();
                                 FirebaseFirestore.instance
-                                    .collection('terms')
+                                    .collection('addedTerms')
                                     .add({
                                   'termTitle': termTitle,
                                   'termImage': termImage,
@@ -338,10 +342,10 @@ class _AddTermState extends State<AddTerm> {
                                   'termExample': termExample,
                                   'termDescription': termDescription,
                                   'termAuthor':
-                                      FirebaseAuth.instance.currentUser!.displayName!,
+                                      auth.currentUser!.displayName,
                                   'isSaved': false,
                                   'uid': uid,
-                                  'termContributor': FirebaseAuth.instance.currentUser!.displayName!,
+                                  'termContributor': auth.currentUser!.displayName,
                                   'authorPhotoUrl': authorPhotoUrl,
                                   'sendDate': DateTime.now(),
                                 });

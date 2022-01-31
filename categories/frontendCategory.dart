@@ -174,6 +174,7 @@ class _AddTermState extends State<AddTerm> {
   String authorPhotoUrl = '';
   String sendDate = '';
   final _formKey = GlobalKey<FormState>();
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -329,7 +330,7 @@ class _AddTermState extends State<AddTerm> {
                               if (formState.validate() == true) {
                                 formState.save();
                                 FirebaseFirestore.instance
-                                    .collection('terms')
+                                    .collection('addedTerms')
                                     .add({
                                   'termTitle': termTitle,
                                   'termImage': termImage,
@@ -338,10 +339,10 @@ class _AddTermState extends State<AddTerm> {
                                   'termExample': termExample,
                                   'termDescription': termDescription,
                                   'termAuthor':
-                                      FirebaseAuth.instance.currentUser!.displayName!,
+                                  auth.currentUser!.displayName,
                                   'isSaved': false,
                                   'uid': uid,
-                                  'termContributor': FirebaseAuth.instance.currentUser!.displayName!,
+                                  'termContributor': auth.currentUser!.displayName,
                                   'authorPhotoUrl': authorPhotoUrl,
                                   'sendDate': DateTime.now(),
                                 });

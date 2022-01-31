@@ -24,6 +24,7 @@ class CategoryCard extends StatelessWidget {
           image: DecorationImage(
             image: NetworkImage(categoryImage),
             fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.28), BlendMode.darken),
           )
       ),
       child: Column(

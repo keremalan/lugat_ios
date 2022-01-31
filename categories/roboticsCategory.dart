@@ -176,6 +176,7 @@ class _AddTermState extends State<AddTerm> {
   String authorPhotoUrl = '';
   String sendDate = '';
   final _formKey = GlobalKey<FormState>();
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -292,7 +293,8 @@ class _AddTermState extends State<AddTerm> {
                         keyboardType: TextInputType.multiline,
                         maxLines: null,
                       ),
-                      const Text("Ek açıklamalar", style: TextStyle(fontSize: 17)),
+                      const Text("Ek açıklamalar",
+                          style: TextStyle(fontSize: 17)),
                       TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -333,7 +335,7 @@ class _AddTermState extends State<AddTerm> {
                                 if (formState.validate() == true) {
                                   formState.save();
                                   FirebaseFirestore.instance
-                                      .collection('terms')
+                                      .collection('addedTerms')
                                       .add({
                                     'termTitle': termTitle,
                                     'termImage': termImage,
@@ -341,11 +343,11 @@ class _AddTermState extends State<AddTerm> {
                                     'termMean': termMean,
                                     'termExample': termExample,
                                     'termDescription': termDescription,
-                                    'termAuthor':
-                                        FirebaseAuth.instance.currentUser!.displayName!,
+                                    'termAuthor': auth.currentUser!.displayName,
                                     'isSaved': false,
                                     'uid': uid,
-                                    'termContributor': FirebaseAuth.instance.currentUser!.displayName!,
+                                    'termContributor':
+                                        auth.currentUser!.displayName,
                                     'authorPhotoUrl': authorPhotoUrl,
                                     'sendDate': DateTime.now(),
                                   });
@@ -365,7 +367,9 @@ class _AddTermState extends State<AddTerm> {
                             ),
                             SizedBox(width: 10),
                             TextButton(
-                              onPressed: () {Navigator.pop(context);},
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
                               child: const Text("İptal et"),
                             ),
                           ],
@@ -422,10 +426,22 @@ class AddTermSuccess extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            TextButton(onPressed: () {Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Index()));}, style: ElevatedButton.styleFrom(primary: Colors.green, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))), child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.0, vertical:6),
-              child: Text("Anasayfaya dön", style: TextStyle(color: Colors.white),),
-            )),
+            TextButton(
+                onPressed: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => const Index()));
+                },
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.green,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30))),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6),
+                  child: Text(
+                    "Anasayfaya dön",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )),
           ],
         ),
       ),

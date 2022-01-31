@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, unused_local_variable
+// ignore_for_file: file_names, unused_local_variable, prefer_final_fields
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,17 +7,17 @@ import 'package:lugat_ios/pages/term.dart';
 import 'package:lugat_ios/widgets/categoryCard.dart';
 import 'package:lugat_ios/widgets/termCard.dart';
 
-class AiCategory extends StatefulWidget {
-  const AiCategory({Key? key}) : super(key: key);
+class ComputerHardwareCategory extends StatefulWidget {
+  const ComputerHardwareCategory({Key? key}) : super(key: key);
 
   @override
-  _AiCategoryState createState() => _AiCategoryState();
+  _ComputerHardwareCategoryState createState() => _ComputerHardwareCategoryState();
 }
 
-class _AiCategoryState extends State<AiCategory> {
+class _ComputerHardwareCategoryState extends State<ComputerHardwareCategory> {
   final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
       .collection('terms')
-      .where('termCategory', isEqualTo: 'Ai')
+      .where('termCategory', isEqualTo: 'comware')
       .snapshots();
 
   @override
@@ -38,7 +38,7 @@ class _AiCategoryState extends State<AiCategory> {
         elevation: 0,
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
-        title: const Text("Yapay Zeka"),
+        title: const Text("Bilgisayar Donanımları"),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -49,9 +49,9 @@ class _AiCategoryState extends State<AiCategory> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CategoryCard(
-                categoryImage: 'https://www.upload.ee/image/13824919/ai.png',
-                categoryName: 'Yapay Zeka',
-                categoryDailyTerm: 'Hard Machine',
+                categoryImage: 'https://www.upload.ee/image/13838754/comware.png',
+                categoryName: 'Bilgisayar Donanımları',
+                categoryDailyTerm: 'RAM',
                 categoryTermCount: '1337',
               ),
               Column(
@@ -96,21 +96,21 @@ class _AiCategoryState extends State<AiCategory> {
                               final String termMean = data['termMean'];
                               final String termExample = data['termExample'];
                               final String termDescription =
-                                  data['termDescription'];
+                              data['termDescription'];
                               final String termAuthor = data['termAuthor'];
                               final String termCategory =
-                                  data['termCategory'];
+                              data['termCategory'];
                               final bool isSaved = data['isSaved'];
                               final String termContributor =
-                                  data['termContributor'];
+                              data['termContributor'];
                               return GestureDetector(
                                 onTap: () {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => Term(
-                                                data: data,
-                                              )));
+                                            data: data,
+                                          )));
                                 },
                                 child: ListTile(
                                   contentPadding: const EdgeInsets.all(0),
@@ -202,7 +202,7 @@ class _AddTermState extends State<AddTerm> {
                     const Padding(
                       padding: EdgeInsets.only(top: 24),
                       child:
-                          Text("Terim adı", style: TextStyle(fontSize: 17)),
+                      Text("Terim adı", style: TextStyle(fontSize: 17)),
                     ),
                     TextFormField(
                       validator: (value) {
@@ -218,13 +218,13 @@ class _AddTermState extends State<AddTerm> {
                       },
                       decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Adını eklemek için dokun',
+                        hintText: 'Adını düzenlemek için dokun',
                       ),
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                     ),
                     const Padding(
-                      padding: EdgeInsets.only(top: 0),
+                      padding: EdgeInsets.only(top: 24),
                       child: Text("Görseli", style: TextStyle(fontSize: 17)),
                     ),
                     TextFormField(
@@ -241,7 +241,7 @@ class _AddTermState extends State<AddTerm> {
                       },
                       decoration: const InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Görsel bağlantısını eklemek için dokunun',
+                        hintText: 'Görsel bağlantısını eklemek için dokun',
                       ),
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
@@ -263,7 +263,7 @@ class _AddTermState extends State<AddTerm> {
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                         hintText:
-                            'Akla gelen ilk anlamını düzenlemek için dokun',
+                        'Akla gelen ilk anlamını düzenlemek için dokun',
                       ),
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
@@ -279,7 +279,7 @@ class _AddTermState extends State<AddTerm> {
                       onChanged: (value) {
                         setState(() {
                           termExample = value;
-                          uid = auth.currentUser!.uid;
+                          uid = FirebaseAuth.instance.currentUser!.uid;
                         });
                       },
                       decoration: const InputDecoration(
@@ -300,9 +300,9 @@ class _AddTermState extends State<AddTerm> {
                       onChanged: (value) {
                         setState(() {
                           termDescription = value;
-                          termCategory = 'Ai';
+                          termCategory = 'comware';
                           authorPhotoUrl =
-                              auth.currentUser!.photoURL!;
+                          FirebaseAuth.instance.currentUser!.photoURL!;
                         });
                       },
                       decoration: const InputDecoration(
@@ -313,9 +313,8 @@ class _AddTermState extends State<AddTerm> {
                       maxLines: null,
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      padding: const EdgeInsets.symmetric(vertical: 24),
+                      child: Row(mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           ElevatedButton(
                             style: OutlinedButton.styleFrom(
@@ -351,7 +350,7 @@ class _AddTermState extends State<AddTerm> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const AddTermSuccess()),
+                                      const AddTermSuccess()),
                                 );
                               }
                             },
@@ -362,15 +361,13 @@ class _AddTermState extends State<AddTerm> {
                           ),
                           SizedBox(width: 10),
                           TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
+                            onPressed: () {Navigator.pop(context);},
                             child: const Text("İptal et"),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 40),
+                    SizedBox(height: 48),
                   ],
                 ),
               ),
@@ -414,7 +411,7 @@ class AddTermSuccess extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: Text(
-                "Teriminiz moderatör onayına gönderilmiştir. Katkınız için Lugat topluluğu adına teşekkür ederiz.",
+                "Teriminiz ilgili kategoriye eklenmiştir. Katkınız için Lugat topluluğu adına teşekkür ederiz.",
                 style: TextStyle(color: Colors.green),
                 textAlign: TextAlign.center,
               ),
