@@ -9,7 +9,7 @@ import 'package:lugat_ios/pages/term.dart';
 import 'package:lugat_ios/utilities/google_sign_in.dart';
 
 class Profile extends StatefulWidget {
-   const Profile({Key? key}) : super(key: key);
+  const Profile({Key? key}) : super(key: key);
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -63,13 +63,17 @@ class _ProfileState extends State<Profile> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: 12),
                   const ProfileHead(),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 16),
-                      //Text("Katkılarım", style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
-                      //ContributeCategoryOverview(),
+                      const SizedBox(height: 32),
+                      Text("Katkılarım",
+                          style: TextStyle(
+                              fontSize: 17, fontWeight: FontWeight.w600)),
+                      SizedBox(height: 0),
+                      ContributeCategoryOverview(),
                       Divider(
                         color: Colors.grey.withOpacity(0.4),
                       ),
@@ -443,14 +447,14 @@ class ContributeCategoryOverviewItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                height: 40,
+                height: 36,
                 width: 6,
                 decoration: BoxDecoration(
                     color: Colors.green,
                     borderRadius: BorderRadius.circular(30)),
               ),
               const SizedBox(
-                width: 6,
+                width: 8,
               ),
               const Text(
                 "Metaverse",
@@ -486,14 +490,13 @@ class _ProfileHeadState extends State<ProfileHead> {
       child: Container(
         child: StreamBuilder<QuerySnapshot>(
           stream: _userStream,
-          builder: (BuildContext context,
-              AsyncSnapshot<QuerySnapshot> snapshot) {
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) {
               return const Text('Bir şeyler ters gitmiş olmalı.');
             }
 
-            if (snapshot.connectionState ==
-                ConnectionState.waiting) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
               return const Text('Şu anda içerik yükleniyor.');
             }
 
@@ -506,12 +509,12 @@ class _ProfileHeadState extends State<ProfileHead> {
                 shrinkWrap: true,
                 children: snapshot.data!.docs
                     .map((QueryDocumentSnapshot<Object?> data) {
-                      final String authorPhotoUrl = data['authorPhotoUrl'];
-                      final String companyName = data['companyName'];
-                      final String email = data['email'];
-                      final String uid = data['uid'];
-                      final String userName = data['userName'];
-                      final String userTitle = data['userTitle'];
+                  final String authorPhotoUrl = data['authorPhotoUrl'];
+                  final String companyName = data['companyName'];
+                  final String email = data['email'];
+                  final String uid = data['uid'];
+                  final String userName = data['userName'];
+                  final String userTitle = data['userTitle'];
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -519,7 +522,8 @@ class _ProfileHeadState extends State<ProfileHead> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(data['userName'],
+                          Text(
+                            data['userName'],
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 20,
@@ -569,13 +573,11 @@ class _WodState extends State<Wod> {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        children: [
-        ],
+        children: [],
       ),
     );
   }
 }
-
 
 class ProfileSettings extends StatefulWidget {
   const ProfileSettings({Key? key}) : super(key: key);
@@ -663,7 +665,6 @@ class _ProfileSettingsState extends State<ProfileSettings> {
 }
 
 class Deneme extends StatefulWidget {
-
   @override
   State<Deneme> createState() => _DenemeState();
 }
@@ -744,16 +745,26 @@ class _PersonalSettingsState extends State<PersonalSettings> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Kişisel Bilgiler", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700)),
+                      Text("Kişisel Bilgiler",
+                          style: TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.w700)),
                       SizedBox(height: 4),
-                      Text("Kişisel bilgilerinizi buradan güncelleyebilirsiniz.", style: TextStyle(color: Colors.black.withOpacity(0.3), fontSize: 13)),
+                      Text(
+                          "Kişisel bilgilerinizi buradan güncelleyebilirsiniz.",
+                          style: TextStyle(
+                              color: Colors.black.withOpacity(0.3),
+                              fontSize: 13)),
                       SizedBox(height: 48),
-                      Text("Profil fotoğrafı", style: TextStyle(fontSize: 17),),
+                      Text(
+                        "Profil fotoğrafı",
+                        style: TextStyle(fontSize: 17),
+                      ),
                       TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Bilgi girmelisiniz';
-                          } null;
+                          }
+                          null;
                         },
                         onChanged: (value) {
                           authorPhotoUrl = value;
@@ -761,31 +772,38 @@ class _PersonalSettingsState extends State<PersonalSettings> {
                         decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText:
-                            'Profil fotoğrafınızın bağlantısını ekleyin'),
+                                'Profil fotoğrafınızın bağlantısını ekleyin'),
                       ),
                       SizedBox(height: 24),
-                      Text("İsim Soyisim", style: TextStyle(fontSize: 17),),
+                      Text(
+                        "İsim Soyisim",
+                        style: TextStyle(fontSize: 17),
+                      ),
                       TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Bilgi girmelisiniz';
-                          } null;
+                          }
+                          null;
                         },
                         onChanged: (value) {
                           userName = value;
                         },
                         decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText:
-                            'İsminizi düzenlemek için dokunun'),
+                            hintText: 'İsminizi düzenlemek için dokunun'),
                       ),
                       SizedBox(height: 24),
-                      Text("Şirket adı", style: TextStyle(fontSize: 17),),
+                      Text(
+                        "Şirket adı",
+                        style: TextStyle(fontSize: 17),
+                      ),
                       TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Bilgi girmelisiniz';
-                          } null;
+                          }
+                          null;
                         },
                         onChanged: (value) {
                           companyName = value;
@@ -796,12 +814,16 @@ class _PersonalSettingsState extends State<PersonalSettings> {
                                 'Şirket isminizi buraya dokunarak düzenleyin'),
                       ),
                       SizedBox(height: 24),
-                      Text("Pozisyonunuz", style: TextStyle(fontSize: 17),),
+                      Text(
+                        "Pozisyonunuz",
+                        style: TextStyle(fontSize: 17),
+                      ),
                       TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Bilgi girmelisiniz';
-                          } null;
+                          }
+                          null;
                         },
                         onChanged: (value) {
                           userTitle = value;
@@ -809,7 +831,7 @@ class _PersonalSettingsState extends State<PersonalSettings> {
                         decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText:
-                            'Pozisyonunuzu buraya dokunarak düzenleyin'),
+                                'Pozisyonunuzu buraya dokunarak düzenleyin'),
                       ),
                       TextButton(
                         onPressed: () {
@@ -827,19 +849,23 @@ class _PersonalSettingsState extends State<PersonalSettings> {
                               'userTitle': userTitle,
                               'updateTime': DateTime.now(),
                             });
-                        }
+                          }
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => ProfileSuccess(), fullscreenDialog: true));
+                              builder: (_) => ProfileSuccess(),
+                              fullscreenDialog: true));
                         },
                         child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(30)
-                          ),
-                          width: 220,
+                            decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(30)),
+                            width: 220,
                             child: Padding(
                               padding: const EdgeInsets.all(14.0),
-                              child: Text("Düzenlemeyi tamamla", style: TextStyle(color: Colors.white), textAlign: TextAlign.center,),
+                              child: Text(
+                                "Düzenlemeyi tamamla",
+                                style: TextStyle(color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
                             )),
                       ),
                     ],
@@ -924,20 +950,28 @@ class ProfileSuccess extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            TextButton(onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_) => Profile(), fullscreenDialog: true));
-            }, style: ElevatedButton.styleFrom(primary: Colors.green, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))), child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.0, vertical:6),
-              child: Text("Profile dön", style: TextStyle(color: Colors.white),),
-            )),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => Profile(), fullscreenDialog: true));
+                },
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.green,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30))),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 6),
+                  child: Text(
+                    "Profile dön",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )),
           ],
         ),
       ),
     );
   }
 }
-
 
 class Help extends StatefulWidget {
   const Help({Key? key}) : super(key: key);

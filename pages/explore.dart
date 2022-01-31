@@ -8,6 +8,7 @@ import 'package:lugat_ios/categories/computerHardware.dart';
 import 'package:lugat_ios/categories/designCategory.dart';
 import 'package:lugat_ios/categories/droneCategory.dart';
 import 'package:lugat_ios/categories/frontendCategory.dart';
+import 'package:lugat_ios/categories/gamedevCategory.dart';
 import 'package:lugat_ios/categories/metaverseCategory.dart';
 import 'package:lugat_ios/categories/othersCategory.dart';
 import 'package:lugat_ios/categories/roboticsCategory.dart';
@@ -54,11 +55,11 @@ class _ExploreState extends State<Explore> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                    const OthersCategory()));
+                                        const OthersCategory()));
                           },
                           child: ExploreCategoriesItem(
                               categoryImage:
-                              'https://www.upload.ee/image/13821620/others__2_.png',
+                                  'https://www.upload.ee/image/13821620/others__2_.png',
                               categoryName: 'Diğer Terimler')),
                       GestureDetector(
                           onTap: () {
@@ -66,23 +67,22 @@ class _ExploreState extends State<Explore> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                    const MetaverseCategory()));
+                                        const MetaverseCategory()));
                           },
                           child: ExploreCategoriesItem(
                               categoryImage:
-                              'https://www.upload.ee/image/13813390/metaverse.png',
+                                  'https://www.upload.ee/image/13813390/metaverse.png',
                               categoryName: 'Metaverse')),
                       GestureDetector(
                           onTap: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                    const AiCategory()));
+                                    builder: (context) => const AiCategory()));
                           },
                           child: ExploreCategoriesItem(
                               categoryImage:
-                              'https://www.upload.ee/image/13824919/ai.png',
+                                  'https://www.upload.ee/image/13824919/ai.png',
                               categoryName: 'Yapay Zeka')),
                       GestureDetector(
                           onTap: () {
@@ -90,11 +90,11 @@ class _ExploreState extends State<Explore> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                    const ArchitectureCategory()));
+                                        const ArchitectureCategory()));
                           },
                           child: ExploreCategoriesItem(
                               categoryImage:
-                              'https://www.upload.ee/image/13838969/architecture.png',
+                                  'https://www.upload.ee/image/13838969/architecture.png',
                               categoryName: 'Mimari')),
                       GestureDetector(
                           onTap: () {
@@ -102,11 +102,11 @@ class _ExploreState extends State<Explore> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                    const ComputerHardwareCategory()));
+                                        const ComputerHardwareCategory()));
                           },
                           child: ExploreCategoriesItem(
                               categoryImage:
-                              'https://www.upload.ee/image/13838754/comware.png',
+                                  'https://www.upload.ee/image/13838754/comware.png',
                               categoryName: 'Donanımlar')),
                       GestureDetector(
                           onTap: () {
@@ -114,11 +114,11 @@ class _ExploreState extends State<Explore> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                    const DroneCategory()));
+                                        const DroneCategory()));
                           },
                           child: ExploreCategoriesItem(
                               categoryImage:
-                              'https://www.upload.ee/image/13824935/drone.png',
+                                  'https://www.upload.ee/image/13824935/drone.png',
                               categoryName: 'Drone')),
                       GestureDetector(
                           onTap: () {
@@ -126,11 +126,11 @@ class _ExploreState extends State<Explore> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                    const FrontEndCategory()));
+                                        const FrontEndCategory()));
                           },
                           child: ExploreCategoriesItem(
                               categoryImage:
-                              'https://www.upload.ee/image/13824944/fe__1_.png',
+                                  'https://www.upload.ee/image/13824944/fe__1_.png',
                               categoryName: 'Front-End')),
                       GestureDetector(
                           onTap: () {
@@ -138,35 +138,33 @@ class _ExploreState extends State<Explore> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                    const SoftwareCategory()));
+                                        const SoftwareCategory()));
                           },
                           child: ExploreCategoriesItem(
                               categoryImage:
-                              'https://www.upload.ee/image/13838742/software.png',
+                                  'https://www.upload.ee/image/13838742/software.png',
                               categoryName: 'Yazılım')),
                       GestureDetector(
                           onTap: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                    const UXCategory()));
+                                    builder: (context) => const UXCategory()));
                           },
                           child: ExploreCategoriesItem(
                               categoryImage:
-                              'https://www.upload.ee/image/13844734/ux.png',
+                                  'https://www.upload.ee/image/13844734/ux.png',
                               categoryName: 'UX')),
                       GestureDetector(
                           onTap: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                    const UICategory()));
+                                    builder: (context) => const UICategory()));
                           },
                           child: ExploreCategoriesItem(
                               categoryImage:
-                              'https://www.upload.ee/image/13844724/ui.png',
+                                  'https://www.upload.ee/image/13844724/ui.png',
                               categoryName: 'UI')),
                       GestureDetector(
                           onTap: () {
@@ -174,11 +172,11 @@ class _ExploreState extends State<Explore> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                    const RoboticsCategory()));
+                                        const RoboticsCategory()));
                           },
                           child: ExploreCategoriesItem(
                               categoryImage:
-                              'https://www.upload.ee/image/13824932/robotics.png',
+                                  'https://www.upload.ee/image/13824932/robotics.png',
                               categoryName: 'Robotik')),
                       GestureDetector(
                           onTap: () {
@@ -204,6 +202,18 @@ class _ExploreState extends State<Explore> {
                               categoryImage:
                                   'https://www.upload.ee/image/13824941/be.png',
                               categoryName: 'Back-end')),
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const GameDevCategory()));
+                          },
+                          child: ExploreCategoriesItem(
+                              categoryImage:
+                                  'https://www.upload.ee/image/13846097/gameDev.png',
+                              categoryName: 'Oyun Geliştirme')),
                     ],
                   ),
                 ),
@@ -213,6 +223,7 @@ class _ExploreState extends State<Explore> {
                 const DesignCategoryOverview(),
                 const UICategoryOverview(),
                 const UXCategoryOverview(),
+                const GameDevCategoryOverview(),
                 const SoftwareCategoryOverview(),
                 const DroneCategoryOverview(),
                 const ComputerHardwareCategoryOverview(),
@@ -250,7 +261,8 @@ class ExploreCategoriesItem extends StatelessWidget {
           image: DecorationImage(
             fit: BoxFit.cover,
             image: NetworkImage(categoryImage),
-            colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.28), BlendMode.darken),
+            colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.28), BlendMode.darken),
           ),
         ),
         child: Column(

@@ -9,6 +9,7 @@ import 'package:lugat_ios/categories/computerHardware.dart';
 import 'package:lugat_ios/categories/designCategory.dart';
 import 'package:lugat_ios/categories/droneCategory.dart';
 import 'package:lugat_ios/categories/frontendCategory.dart';
+import 'package:lugat_ios/categories/gamedevCategory.dart';
 import 'package:lugat_ios/categories/metaverseCategory.dart';
 import 'package:lugat_ios/categories/othersCategory.dart';
 import 'package:lugat_ios/categories/roboticsCategory.dart';
@@ -177,12 +178,11 @@ class _HomeState extends State<Home> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                  const UICategory()));
+                                  builder: (context) => const UICategory()));
                         },
                         child: PopularCategoryItem(
                           popCategoryImage:
-                          'https://www.upload.ee/image/13844724/ui.png',
+                              'https://www.upload.ee/image/13844724/ui.png',
                           popCategoryTitle: 'UI',
                         )),
                     GestureDetector(
@@ -190,12 +190,11 @@ class _HomeState extends State<Home> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                  const UXCategory()));
+                                  builder: (context) => const UXCategory()));
                         },
                         child: PopularCategoryItem(
                           popCategoryImage:
-                          'https://www.upload.ee/image/13844734/ux.png',
+                              'https://www.upload.ee/image/13844734/ux.png',
                           popCategoryTitle: 'UX',
                         )),
                     GestureDetector(
@@ -204,11 +203,11 @@ class _HomeState extends State<Home> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                  const ComputerHardwareCategory()));
+                                      const ComputerHardwareCategory()));
                         },
                         child: PopularCategoryItem(
                           popCategoryImage:
-                          'https://www.upload.ee/image/13838754/comware.png',
+                              'https://www.upload.ee/image/13838754/comware.png',
                           popCategoryTitle: 'Donanımlar',
                         )),
                     GestureDetector(
@@ -217,11 +216,11 @@ class _HomeState extends State<Home> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                  const SoftwareCategory()));
+                                      const SoftwareCategory()));
                         },
                         child: PopularCategoryItem(
                           popCategoryImage:
-                          'https://www.upload.ee/image/13838742/software.png',
+                              'https://www.upload.ee/image/13838742/software.png',
                           popCategoryTitle: 'Yazılım',
                         )),
                     GestureDetector(
@@ -230,11 +229,11 @@ class _HomeState extends State<Home> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                  const DesignCategory()));
+                                      const DesignCategory()));
                         },
                         child: PopularCategoryItem(
                           popCategoryImage:
-                          'https://www.upload.ee/image/13779591/designCategory.png',
+                              'https://www.upload.ee/image/13779591/designCategory.png',
                           popCategoryTitle: 'Tasarım',
                         )),
                   ],
@@ -463,6 +462,153 @@ class _UXCategoryOverviewState extends State<UXCategoryOverview> {
           children: [
             const Text(
               "UX",
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SoftwareCategory()));
+              },
+              child: Text(
+                "Tümünü gör",
+                style: TextStyle(color: Colors.black.withOpacity(0.8)),
+              ),
+            ),
+          ],
+        ),
+        Align(
+          alignment: Alignment.topCenter,
+          child: StreamBuilder<QuerySnapshot>(
+            stream: _termsStream,
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              try {
+                if (snapshot.hasError) {
+                  return const Text('Bir şeyler ters gitmiş olmalı.');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Text('Şu anda içerik yükleniyor.');
+                }
+
+                if (snapshot.hasData) {
+                  final items = snapshot.data!.docs
+                      .map((QueryDocumentSnapshot<Object?> data) {
+                    final String termTitle = data.get('termTitle');
+                    final String termImage = data['termImage'];
+                    final String termMean = data['termMean'];
+                    final String termExample = data['termExample'];
+                    final String termDescription = data['termDescription'];
+                    final String termAuthor = data['termAuthor'];
+                    final String termCategory = data['termCategory'];
+                    final bool isSaved = data['isSaved'];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Term(
+                                      data: data,
+                                    )));
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(6),
+                            child: Image.network(
+                              data['termImage'],
+                              height: 106,
+                              width: 106,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          SizedBox(
+                            width: 100,
+                            child: Text(
+                              data['termTitle'],
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Text(
+                            data['termAuthor'],
+                            style: TextStyle(
+                              overflow: TextOverflow.ellipsis,
+                              fontSize: 12,
+                              color: Colors.black.withOpacity(0.4),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList();
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: GridView.builder(
+                        primary: false,
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 1 / 1.4,
+                          crossAxisCount: 3,
+                        ),
+                        itemCount: items.length,
+                        padding: const EdgeInsets.only(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return items[index];
+                        }),
+                  );
+                } else {
+                  return Column(
+                    children: const [
+                      Text("Bir hata meydana geldi!"),
+                    ],
+                  );
+                }
+              } catch (Exc) {
+                print(Exc);
+                rethrow;
+              }
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class GameDevCategoryOverview extends StatefulWidget {
+  const GameDevCategoryOverview({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<GameDevCategoryOverview> createState() =>
+      _GameDevCategoryOverviewState();
+}
+
+class _GameDevCategoryOverviewState extends State<GameDevCategoryOverview> {
+  final Stream<QuerySnapshot> _termsStream = FirebaseFirestore.instance
+      .collection('terms')
+      .where("termCategory", isEqualTo: 'GameDev')
+      .limit(3)
+      .snapshots();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Oyun Geliştirme",
               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
             ),
             TextButton(
